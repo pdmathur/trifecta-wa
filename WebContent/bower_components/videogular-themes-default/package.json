@@ -1,0 +1,63 @@
+{
+  "_args": [
+    [
+      "videogular-themes-default",
+      "/Users/naveenkumarmadala/NetBeansProjects/Trifecta"
+    ]
+  ],
+  "_from": "videogular-themes-default@latest",
+  "_id": "videogular-themes-default@1.4.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/videogular-themes-default",
+  "_nodeVersion": "4.2.2",
+  "_npmUser": {
+    "email": "elecash@gmail.com",
+    "name": "elecash"
+  },
+  "_npmVersion": "3.3.9",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "videogular-themes-default",
+    "raw": "videogular-themes-default",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/videogular-themes-default/-/videogular-themes-default-1.4.1.tgz",
+  "_shasum": "d48dd4cfb09783a577ea70c2fcb762a93501804e",
+  "_shrinkwrap": null,
+  "_spec": "videogular-themes-default",
+  "_where": "/Users/naveenkumarmadala/NetBeansProjects/Trifecta",
+  "dependencies": {},
+  "description": "bower-videogular-themes-default ===============================",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-release": "~0.7.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "d48dd4cfb09783a577ea70c2fcb762a93501804e",
+    "tarball": "http://registry.npmjs.org/videogular-themes-default/-/videogular-themes-default-1.4.1.tgz"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "gitHead": "b0706fa19e5d3ab6e280ced67b3bb9b09f6ce8f8",
+  "main": "videogular.css",
+  "maintainers": [
+    {
+      "name": "elecash",
+      "email": "elecash@gmail.com"
+    }
+  ],
+  "name": "videogular-themes-default",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {},
+  "version": "1.4.1"
+}

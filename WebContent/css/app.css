@@ -1,0 +1,429 @@
+/* app css stylesheet */
+body {
+    /* padding-top: 20px; */
+    font-size: 10.5pt; 
+    font-family:calibri;
+}
+
+/*Theme color #4863A0*/
+#appHeader {
+    background-color: #428bca;
+    min-height: 40px;
+    min-width: 100%;
+}
+
+.trifectaTitle {
+    font-size: 28.0pt;
+    font-family: Times New Roman;
+    color: #ffffff; /*AB9052;*/
+    font-weight: bold;
+    language: en-US;
+    padding: 5px;
+}
+
+.pageTitle {
+    float: left;
+    position: relative;
+    font-size: 13px;
+    font-weight: bolder;
+}
+
+.pageTitle1 {
+    float: left;
+    position: relative;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.tm {
+    font-size: 17.3159pt;
+    font-family: Times New Roman;
+    color: #ffffff;
+    font-weight: bold;
+    language: en-US
+}
+
+.topRightDet {
+    float: right;
+    text-align: right;
+    margin-right: 10px;
+    color: #ffffff;
+}
+
+#eventDetails {
+    padding: 5px;
+    font-size: 8pt;
+    color: #428bca;
+    text-align: right;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    color: inherit;
+}
+
+.panel-title1 {
+    font-weight: bolder;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    color: inherit;
+}
+
+.panel-heading {
+    padding: 1px 5px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-body {
+    padding: 0px;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 2px 5px;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus {
+    color: #ffffff;
+    background-color: #428bca;
+}
+
+.nav-pills>li.active>a:hover {
+    background-color: #AB9052;
+    color: black;
+}
+
+.nav-list>li.active>a, .nav-list>li.active>a:focus {
+    color: #ffffff;
+    background-color: #428bca;
+}
+
+.btn-default, .btn-primary, .btn-success, .btn-info, .btn-warning,
+.btn-danger {
+    -webkit-box-shadow: 2px 3px 0px rgba(4, 4, 4, 0.3);
+    -moz-box-shadow: 2px 3px 0px rgba(4, 4, 4, 0.3);
+    box-shadow: 2px 3px 0px rgba(4, 4, 4, 0.3);
+    /*border-radius: 0;*/
+}
+
+.btn-default:active, .btn-primary:active, .btn-success:active, .btn-info:active,
+.btn-warning:active, .btn-danger:active {
+    margin-top: 3px;
+    margin-bottom: -3px;
+    background-color: #e67d1a;
+    border-color: #e67d1a;
+
+}
+.btn-default:disabled, .btn-primary:disabled{
+    background-color: #e67d1a;
+    border-color: #e67d1a;
+
+}
+.btn-link{
+    color: #e67d1a;
+}
+.btn-default, .btn-primary{
+    color: #FFFFFF;
+    background-color: #e67d1a;
+    border-color: black;
+}
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+    color: #FFFFFF;
+    background-color: #e67d1a;
+    border-color: black;
+}
+.eventHdrDet {
+    padding: 2px;
+}
+
+.scoreDivBorder {
+    fill: #AB9052;
+    stroke: #AB9052;
+    stroke-width: 1;
+    fill-opacity: 0.2;
+    stroke-opacity: 0.2
+}
+
+.scoreDivSelect {
+    fill: #428bca;
+    stroke: #428bca;
+    stroke-width: 5;
+    fill-opacity: 0.8;
+    stroke-opacity: 0.9
+}
+
+.scoreDivText {
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.scoreDivContainer {
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin-top: 2px;
+}
+
+.scoreDivBox {
+    -moz-box-shadow: 5px 5px 2px #ccc;
+    -webkit-box-shadow: 5px 5px 2px #ccc;
+    box-shadow: 5px 5px 2px #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.bs-tableDiv {
+    cursor: pointer;
+    padding: 5px;
+}
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
+}
+.celldiv {
+    float: left;
+    position: relative;
+    -moz-box-shadow: 5px 5px 2px #ccc;
+    -webkit-box-shadow: 5px 5px 2px #ccc;
+    box-shadow: 5px 5px 2px #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.snumdiv {
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    color: #ffffff;
+    font-size: 11pt;
+    font-weight: bold;
+    z-index: 1000; /* float: left; */ /* overflow: hidden; */
+}
+
+.snumdiv1 {
+    font-size: 28.0pt;
+    font-family: Times New Roman;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    color: white;
+    font-weight: bold;
+    z-index: 20020
+}
+
+.shot-miss {
+    border: 2px solid red;
+}
+
+.shot-hit {
+    border: 2px solid green;
+}
+
+#modaldiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #EEE;
+    display: none;
+    overflow: hidden;
+}
+
+#fsdiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    padding: 10px;
+    z-index: 20000;
+    display: none;
+    /* float: inherit; */
+    overflow: auto;
+    text-align: center;
+}
+
+.fsImg {
+    width: 100vw;
+    height: 75vw; /* height:width ratio = 9/16 = .5625  */
+    /*background: pink;*/
+    max-height: 100vh;
+    max-width: 133.33vh; /* 16/9 = 1.778 */
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0; /* vertical center */
+    left: 0;
+    right: 0; /* horizontal center */
+}
+/** 
+ * iPad with portrait orientation.
+ */
+@media all and (device-width: 768px) and (device-height: 1024px) and
+(orientation:portrait) {
+    .fsImg {
+        height: 1024px;
+    }
+    .pageSummtableDiv {
+        cursor: pointer;
+        padding: 5px;
+        overflow: auto;
+    }
+}
+
+/** 
+ * iPad with landscape orientation.
+ */
+@media all and (device-width: 768px) and (device-height: 1024px) and
+(orientation:landscape) {
+    .fsImg {
+        height: 768px;
+    }
+    .pageSummtableDiv {
+        cursor: pointer;
+        padding: 5px;
+        overflow: auto;
+    }
+}
+
+/**
+ * iPhone 5
+ * You can also target devices with aspect ratio.
+ */
+@media screen and (device-aspect-ratio: 40/71) {
+    .fsImg {
+        height: 500px;
+    }
+}
+
+#feedLoading {
+    position: absolute;
+    top: 200px;
+    width: 100%;
+    text-align: center;
+    font-size: 4em;
+    color: white;
+    text-shadow: 2px 2px 2px #021124;
+    z-index: 2000;
+}
+
+.pageSummtableDiv {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.pageSumHeader {
+    text-align: center;
+    background-color: lightgray;
+}
+
+.pageSumSelectedEvent {
+    background-color: #66ccff;
+}
+
+#pageSum td {
+    text-align: center;
+}
+
+#pageSum td PageSumDivider {
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+#togMenu {
+    position: relative;
+}
+
+#togMenu a {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+#analysisMenu .panel-body {
+    color: #428bca;
+}
+
+.analysisTM {
+    display: none;
+    border: 2px;
+    background-color: #428bca;
+    padding: 2px;
+}
+
+.analysisRadioItem {
+    margin: 2px 5px 2px 5px;
+}
+/*.spinner {  
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1000;
+    background-color:grey;
+    opacity: .8;
+ }*/
+.video-layout {
+    text-align: center;
+    background-color: #222222;
+    width: 100%;
+    height: 100%;
+}
+
+.video-centre {
+    text-align: left;
+    min-width: 100%;
+    width: 100%;
+    min-height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* For removing th eplay icon on iPhone*/
+video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+}
+
+/*html, body, .container-table {
+    height: 100%;
+}
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}*/
+
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+

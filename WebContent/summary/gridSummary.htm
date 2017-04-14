@@ -1,0 +1,53 @@
+
+<div class="row">
+	<div class="col-lg-12 col-sm-12">
+
+
+
+		<div class="bs-tableDiv">
+
+			<table class="table table-condensed">
+
+				<tbody>
+					<!--Very bad coding..fix it -->
+					<tr ng-repeat="n in [].constructor(5) track by $index">
+						<td style="text-align: center; vertical-align: middle;"><div
+								ng-if="$index == 0"
+								style="vertical-align: top; font-weight: bold;">Station</div>
+							{{$index + 1}}</td>
+						<td style="text-align: center; vertical-align: middle;"
+							ng-init="item1 = $parent.$index * 5 + $index"
+							ng-repeat="m in [0,1,2,3,4]">
+							<div class="celldiv">
+								<img ng-if="SummaryCtrl.animationType == 'summary' || (SummaryCtrl.animationType != 'summary' && !SummaryCtrl.isMobile)"
+									ng-class="(SummaryCtrl.assetsArray[item1].hit == 1) ? 'shot-hit' : 'shot-miss'"
+									ng-src="{{SummaryCtrl.assetsArray[item1].asset|| 'img/default_thumbnail.png'}}"
+									width="120" height="90"
+									ng-click="SummaryCtrl.showThumbnail(SummaryCtrl.assetsArray[item1].asset, SummaryCtrl.assetsArray[item1].shot)">
+								<video ng-if="SummaryCtrl.animationType != 'summary' && SummaryCtrl.isMobile"
+									ng-class="(SummaryCtrl.assetsArray[item1].hit == 1) ? 'shot-hit' : 'shot-miss'"
+									id="{{SummaryCtrl.assetsArray[item1].shot}}" autoplay
+									style="vertical-align: middle; text-align: center;"
+									poster="{{SummaryCtrl.assetsArray[item1].asset || 'img/default_thumbnail.png'}}"
+									width="120" height="90" onclick="goFullscreen(this.id)">
+									Sorry, Your browser does not support video.
+								</video> 
+								<input ng-if="SummaryCtrl.animationType != 'summary'"
+									type='hidden'
+									value="{{SummaryCtrl.animationArray[item1].asset}}"
+									id='H{{SummaryCtrl.animationArray[item1].shot}}' />
+								<div class="snumdiv">{{SummaryCtrl.assetsArray[item1].shot}}</div>
+
+							</div>
+						</td>
+
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+
+<div ng-include="'summary/carousel.view.html'"></div>

@@ -1,0 +1,135 @@
+<div class="pageSummtableDiv">
+
+	<table class="table table-bordered table-condensed table-responsive"
+		id="pageSum">
+
+            <thead style="background-color: white;">
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td colspan="2">Avg</td>
+
+				<td colspan="5" class="pageSumHeader">Station</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td colspan="3" class="pageSumHeader">Flight Direction</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td></td>
+				<td colspan="6" class="pageSumHeader">Aim Point</td>
+
+			</tr>
+			<tr>
+				<td></td>
+				<td colspan="3"># Rounds</td>
+
+				<td>Hits</td>
+				<td>Shots</td>
+				<td ng-repeat="st in [1, 2, 3, 4, 5] track by $index"
+					class="pageSumHeader">{{st}}</td>
+				<td class="PageSumDivider"></td>
+
+				<td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index"
+					class="pageSumHeader">{{an}}</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td>On%</td>
+				<td colspan="6" class="pageSumHeader">% of Round(on Average)</td>
+
+			</tr>
+			<tr>
+				<td></td>
+				<td colspan="3">{{SummaryCtrl.coachSummAvg.totalRnds}}</td>
+				<td>{{SummaryCtrl.coachSummAvg.totalHits/SummaryCtrl.coachSummData.length
+					| number:1}}</td>
+				<td>{{SummaryCtrl.coachSummAvg.totalShots/SummaryCtrl.coachSummData.length
+					| number:1}}</td>
+				<td ng-repeat="st in [1, 2, 3, 4, 5] track by $index"
+					class="pageSumHeader">{{SummaryCtrl.coachSummAvg.stHits[st]/SummaryCtrl.coachSummData.length
+					| number:1}}</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index"
+					class="pageSumHeader">{{SummaryCtrl.coachSummAvg.angleHits[$index]/SummaryCtrl.coachSummData.length
+					| number:1}}
+					/{{SummaryCtrl.coachSummAvg.angleShots[$index]/SummaryCtrl.coachSummData.length
+					| number:1}}</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td
+					ng-repeat='an in ["aimon","aimleft","aimright","aimahead","aimbehind","aimover","aimunder"] track by $index'
+					class="pageSumHeader">{{SummaryCtrl.coachSummAvg.aimHits[$index]/SummaryCtrl.coachSummAvg.aimShots[0]*100
+					| number:0}}%</td>
+
+
+			</tr>
+			<tr>
+				<td>Rnd</td>
+				<td style="width: 6em;">Date</td>
+				<td>Player</td>
+				<td>Description</td>
+				<td>Score</td>
+				<td>Shots</td>
+				<td colspan="5" class="pageSumHeader">Hits</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td colspan='3' class="pageSumHeader">Hits/Total</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td>On</td>
+				<td class="pageSumHeader">Lft</td>
+				<td class="pageSumHeader">Rt</td>
+				<td class="pageSumHeader">Ahd</td>
+				<td class="pageSumHeader">Bnd</td>
+				<td class="pageSumHeader">Ovr</td>
+				<td class="pageSumHeader">Und</td>
+
+			</tr>
+                </thead>
+                <tbody>
+			<tr ng-repeat="item in SummaryCtrl.coachSummData"
+				ng-class="(item.eventId == SummaryCtrl.eventId)?'pageSumSelectedEvent':''"
+                                ng-click="SummaryCtrl.selectEvent(item.eventId, item.userId)">
+				<td>{{SummaryCtrl.coachSummData.length - $index}}</td>
+				<td>{{item.date | date:'MMM - dd'}}</td>
+				<td style='text-align: left;'>{{item.nname}}</td>
+				<td style='text-align: left;'>{{item.title}}</td>
+				<td>{{item.totalHits}}</td>
+				<td>{{item.totalShots}}</td>
+				<td ng-repeat="st in [1, 2, 3, 4, 5] track by $index">{{item.stHits[st]}}</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index">{{item.angleHits[$index]}}</td>
+				<td class="PageSumDivider"></td>
+
+
+				<td
+					ng-repeat='an in ["aimon","aimleft","aimright","aimahead","aimbehind","aimover","aimunder"] track by $index'>{{item.aimHits[$index]}}</td>
+
+				<!-- <td>{{item.onScore}}</td>
+                <td>{{item.leftScore}}</td>
+                <td>{{item.rightScore}}</td>
+                <td>{{item.aheadScore}}</td>
+                <td>{{item.behindScore}}</td>
+                <td>{{item.overScore}}</td>
+                <td>{{item.underScore}}</td> -->
+
+			</tr>
+		</tbody>
+	</table>
+</div>
+<script>
+    
+    var offset = $('.navbar').height();
+    $("html:not(.legacy) table").stickyTableHeaders({fixedOffset: offset});
+  </script>

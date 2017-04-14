@@ -1,0 +1,31 @@
+<div class="bs-tableDiv">
+
+	<table class="table">
+		<thead>
+			<tr style="text-align: center;">
+				<th style="text-align: center;">Station</th>
+				<th style="text-align: left;">Flight Path</th>
+				<th style="text-align: left;">Velocities</th>
+				<th style="text-align: left;">Money Shot</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="n in SummaryCtrl.viewConfig.rows">
+				<td style="text-align: center; vertical-align: middle;">{{n}}</td>
+				<td style="text-align: center; vertical-align: middle;"
+					ng-repeat="k in SummaryCtrl.viewConfig.cols">
+					<div class="celldiv">
+						<div ng-click="SummaryCtrl.goToAnalysisSTAO(n,k)">
+							<svg style="display: block; margin: auto;" width="160"
+								height="90" id="{{'c_'+n +'_'+ k}}">
+                            </svg>
+						</div>
+					</div>
+				</td>
+
+
+			</tr>
+		</tbody>
+	</table>
+</div>

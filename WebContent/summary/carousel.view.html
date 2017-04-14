@@ -1,0 +1,72 @@
+<script type="text/ng-template" id="carousel.html">
+    <!-- <div class="modal-header" style="margin:0px;padding:0px;border:0px;">
+                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()" style="padding-right:15px;">&times;</button>
+
+      </div> -->
+      
+  <div class="modal-body" style="padding:0px;">
+    <div uib-carousel active="shotNo" interval="0" no-wrap="true">
+      <div ng-if="isVideo == 0" uib-slide ng-repeat="item in assetsArray track by $index" index="$index" class="fsImg full-screen"  
+      style="background-image:url('{{item.asset}}');" ng-click="cancel()">
+        
+        <div class="snumdiv1">
+          {{item.shot}}
+        </div>
+      </div>
+      
+      <!-- video -->
+      <div ng-if="isVideo == 1" uib-slide ng-repeat="item in assetsArray track by $index" index="$index" class="fsImg full-screen">
+        <video class="fsImg" id="v_{{item.shot}}" ng-src="{{trustSrc(item.asset)}}" controls preload  ></video>
+            
+        <div class="snumdiv1">
+          {{item.shot}}
+        </div>
+      </div>
+    </div>
+  </div>
+    
+   
+  
+</script>
+
+<style>
+    
+.full-screen {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.modal-dialog {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+.modal-content {
+    height: 100%;
+    min-height: 100%;
+    height: auto;
+    border-radius: 0;
+    background-color: black;
+
+}
+.carousel-inner{
+    position: relative;
+    width: 100%;
+    /* overflow: hidden; */
+}
+.carousel-control {
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    left: 0;
+    width: 15%;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+    background-color: rgba(0, 0, 0, 0);
+    filter: alpha(opacity=50);
+    opacity: .5;
+}    
+</style>

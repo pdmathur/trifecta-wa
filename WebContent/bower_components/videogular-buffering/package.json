@@ -1,0 +1,63 @@
+{
+  "_args": [
+    [
+      "videogular-buffering",
+      "/Users/naveenkumarmadala/NetBeansProjects/Trifecta"
+    ]
+  ],
+  "_from": "videogular-buffering@latest",
+  "_id": "videogular-buffering@1.4.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/videogular-buffering",
+  "_nodeVersion": "4.2.2",
+  "_npmUser": {
+    "email": "elecash@gmail.com",
+    "name": "elecash"
+  },
+  "_npmVersion": "3.3.9",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "videogular-buffering",
+    "raw": "videogular-buffering",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/videogular-buffering/-/videogular-buffering-1.4.1.tgz",
+  "_shasum": "e37e7ead90b4ab1bf89072194e944891183dfac4",
+  "_shrinkwrap": null,
+  "_spec": "videogular-buffering",
+  "_where": "/Users/naveenkumarmadala/NetBeansProjects/Trifecta",
+  "dependencies": {},
+  "description": "bower-videogular-buffering ==========================",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-release": "~0.7.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "e37e7ead90b4ab1bf89072194e944891183dfac4",
+    "tarball": "http://registry.npmjs.org/videogular-buffering/-/videogular-buffering-1.4.1.tgz"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "gitHead": "1d2324de185b3573244c05a009c3a0e2782a1121",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "elecash",
+      "email": "elecash@gmail.com"
+    }
+  ],
+  "name": "videogular-buffering",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {},
+  "version": "1.4.1"
+}

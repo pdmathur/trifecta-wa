@@ -1,0 +1,302 @@
+
+
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper"
+         style="margin-top: 2px; padding-left: 5px; padding-right: 2px; background-color: #ffffff;">
+        <div class="panel panel-default"
+             style="margin-top: 5px; margin-bottom: 6px;">
+            <div class="panel-body" id="eventDetails">
+
+                <div class="eventHdrDet" style="font-weight: bold;">{{SummaryCtrl.eventDet.name}}
+                </div>
+                <div class="eventHdrDet">{{SummaryCtrl.eventDet.field}}</div>
+                <div class="eventHdrDet">{{SummaryCtrl.eventDet.description}}</div>
+            </div>
+        </div>
+        <div class="panel panel-default" style="margin-bottom: 0px;">
+            <div class="panel-heading" style="padding: 5px;">
+                <h3 class="panel-title">Overall</h3>
+            </div>
+            <div class="panel-body" style="padding: 5px;">
+                <ul class="nav nav-pills nav-stacked" style="cursor: pointer;">
+                    <li role="presentation"
+                        ng-class="SummaryCtrl.animationType == 'summary' ? 'active' : ''"><a
+                            ng-click="SummaryCtrl.loadAnimationAnalysis('summary')">Round
+                            Summary</a></li>
+
+                    <li role="presentation"
+                        ng-class="SummaryCtrl.viewType == 'RS' ? 'active' : ''"><a
+                            ng-click="SummaryCtrl.loadAnalysis('RS')">Player Rounds </a></li>
+
+                </ul>
+            </div>
+            <div class="panel-heading" style="padding: 5px;">
+                <h3 class="panel-title">Animation</h3>
+            </div>
+            <div class="panel-body " style="padding: 5px;">
+                <ul class="nav nav-pills nav-stacked" style="cursor: pointer;">
+                    <li role="presentation"
+                        ng-class="SummaryCtrl.animationType == 'stpov' ? 'active' : ''"><a
+                            ng-click="SummaryCtrl.loadAnimationAnalysis('stpov')">Station
+                            PoV</a></li>
+                    <li role="presentation"
+                        ng-class="SummaryCtrl.animationType == 'gnpov' ? 'active' : ''"><a
+                            ng-click="SummaryCtrl.loadAnimationAnalysis('gnpov')">Gun PoV</a></li>
+                </ul>
+
+
+            </div>
+            <div class="panel-heading" style="padding: 5px;">
+                <h3 class="panel-title">Analysis</h3>
+            </div>
+            <div class="panel-body" style="padding: 5px;">
+                <!--<ul class="nav nav-pills nav-stacked" style="cursor: pointer">
+                        <li role="presentation"
+                                ng-class="SummaryCtrl.viewType == 'STOA' ? 'active' : ''"><a
+                                ng-click="SummaryCtrl.loadAnalysis('STOA')">Overview - Station</a></li>
+                        <li role="presentation"
+                                ng-class="SummaryCtrl.viewType == 'FPOA' ? 'active' : ''"><a
+                                ng-click="SummaryCtrl.loadAnalysis('FPOA')">Overview - Flight
+                                        Path</a></li>
+                </ul>-->
+
+                <ul class="nav nav-list" style="cursor: pointer;">
+                    <li ng-class="SummaryCtrl.viewType == 'SWG' ? 'active' : ''">
+                        <a class="tree-toggler nav-header"
+                           ng-click="SummaryCtrl.loadAnalysis('SWG')">Flight Path</a>
+                        <ul id="swg" class="nav nav-list tree analysisTM">
+                            <div ng-include="'summary/analysisMenu.view.html'"></div>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav nav-list" style="cursor: pointer;">
+                    <li ng-class="SummaryCtrl.viewType == 'VEL' ? 'active' : ''">
+                        <a class="tree-toggler nav-header"
+                           ng-click="SummaryCtrl.loadAnalysis('VEL')">Velocities</a>
+                        <ul id="vel" class="nav nav-list tree analysisTM">
+                            <div ng-include="'summary/analysisMenu.view.html'"></div>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav nav-list" style="cursor: pointer;">
+                    <li id="moneyT"
+                        ng-class="SummaryCtrl.viewType == 'MONEY' ? 'active' : ''"><a
+                            class="tree-toggler nav-header"
+                            ng-click="SummaryCtrl.loadAnalysis('MONEY')">Money Shot</a>
+                        <ul id="money" class="nav nav-list tree analysisTM">
+                            <div ng-include="'summary/analysisMenu.view.html'"></div>
+                        </ul></li>
+                </ul>
+            </div>
+            <div class="panel-heading" style="padding: 5px;">
+                <h3 class="panel-title">Quick Play</h3>
+            </div>
+            <div class="panel-body" style="padding: 5px; height: 20px;">
+                <ul class="nav nav-list " style="cursor: pointer; align: center;">
+                    <li role="presentation"><a ng-click="SummaryCtrl.play('all')">All
+                            Shots</a></li>
+                </ul>
+            </div>
+            <div class="panel-body" style="padding: 5px; height: 30px;">
+
+                <ul class="nav nav-pills " style="cursor: pointer">
+                    <li role="presentation"><a ng-click="SummaryCtrl.play('miss')">Misses</a></li>
+                    <li role="presentation"><a ng-click="SummaryCtrl.play('hits')">Hits</a></li>
+                </ul>
+
+
+            </div>
+        </div>
+        <div class="panel panel-default" style="margin-top: 8px;" ng-if="globals.currentUser.isOwner || globals.currentUser.isCoach">
+
+            <div class="panel-heading" style="padding: 5px;">
+                <h3 class="panel-title">Coach's Dashboard</h3>
+            </div>
+            <div class="panel-body " style="padding: 5px;">
+                <ul class="nav nav-pills nav-stacked" style="cursor: pointer;">
+                    <li role="presentation"
+                        ng-class="SummaryCtrl.viewType == 'COACH_SUMMARY' ? 'active' : ''"><a
+                            ng-click="SummaryCtrl.loadAnalysis('COACH_SUMMARY')">Coach's Corner
+                        </a></li>
+                    <li role="presentation"><a ng-click="SummaryCtrl.goToTeamMgmt()">Team Management</a></li>
+                </ul>
+
+            </div>
+            </div>
+        <div class="panel panel-default" style="margin-top: 8px;">
+
+            <div class="panel-body" style="padding: 5px;">
+
+
+                <ul class="nav nav-pills nav-stacked" style="cursor: pointer;">
+                    <li role="presentation"><a href="/"
+                                               ng-if="globals.currentUser">Sign out</a></li>
+
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div ng-include="'summary/summaryHeader.view.html'"></div>
+            <div ng-include="SummaryCtrl.templateURL"></div>
+            <div ng-if="SummaryCtrl.viewType != 'RS' && SummaryCtrl.viewType != 'COACH_SUMMARY'"
+                 ng-include="'summary/score.view.html'"></div>
+
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+<div id="feedLoading" ng-show="isLoading">
+    <img src="img/loading.gif" width="200" height="200">
+</div>
+
+
+
+<script>
+            $(document).ready(function () {
+                $('a.tree-toggler').click(function () {
+                    //worst way of doing
+                    var elementClicked = $(this).parent().children('ul.tree')[0].id;
+                    if (elementClicked == 'swg') {
+                        document.getElementById("vel").style.display = "none";
+                        document.getElementById("money").style.display = "none";
+                    } else if (elementClicked == 'vel') {
+                        document.getElementById("swg").style.display = "none";
+                        document.getElementById("money").style.display = "none";
+                    } else if (elementClicked == 'money') {
+                        document.getElementById("swg").style.display = "none";
+                        document.getElementById("vel").style.display = "none";
+                    }
+                    $(this).parent().children('ul.tree').toggle(300);
+                });
+            });
+
+            function handleAnalysisMenuClick(id) {
+
+            }
+            function hidefs() {
+                fs = document.getElementById("fsdiv").style.display = "none";
+                if (vidElem != undefined) {
+                    vidElem.pause();
+                    exitFullScreen();
+                    vidElem.removeAttribute("onclick");
+                    vidElem.setAttribute("onclick", "goFullscreen(" + vidElem.id + ")");
+                }
+            }
+            var vidElem;
+            function goFullscreen(id) {
+                vidElem = document.getElementById(id);
+                //Hack for video playback not working with angular..fix this with videogular 
+                var urlElem = document.getElementById('H' + id);
+                if (urlElem != undefined) {
+                    url = document.getElementById('H' + id).value;
+                    vidElem.src = url;
+                    vidElem.load();
+                    vidElem.removeAttribute("onclick");
+                    vidElem.setAttribute("onclick", "hidefs()");
+                }
+
+                if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+                    vidElem.addEventListener("loadedmetadata", loadFullscreen, false);
+                } else {
+                    loadFullscreen();
+                }
+            }
+            function loadFullscreen() {
+                if (vidElem.requestFullscreen) {
+                    vidElem.requestFullscreen();
+                } else if (vidElem.mozRequestFullScreen) {
+                    vidElem.mozRequestFullScreen();
+                } else if (vidElem.webkitSupportsFullscreen) {
+                    vidElem.webkitEnterFullscreen();
+                } else if (vidElem.webkitRequestFullScreen) {
+                    vidElem.webkitRequestFullScreen();
+                } else if (vidElem.requestFullScreen) {
+                    vidElem.requestFullScreen();
+                }
+                vidElem.play();
+            }
+            function exitFullScreen() {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+            function playVideoInModal() {
+                // Variables for iFrame code. Width and height from data attributes, else use default.
+                var vidWidth = 560; // default
+                var vidHeight = 315; // default
+                //if ( $(this).attr('data-width') ) { vidWidth = parseInt($(this).attr('data-width')); }
+                //if ( $(this).attr('data-height') ) { vidHeight =  parseInt($(this).attr('data-height')); }
+                var iFrameCode = '<iframe width="' + vidWidth + '" height="' + vidHeight + '" scrolling="no" allowtransparency="true" allowfullscreen="true" src="http://www.youtube.com/embed/' + queryVars['v'] + '?rel=0&wmode=transparent&showinfo=0" frameborder="0"></iframe>';
+
+                // Replace Modal HTML with iFrame Embed
+                $('#mediaModal .modal-body').html(iFrameCode);
+                // Set new width of modal window, based on dynamic video content
+                $('#mediaModal').on('show.bs.modal', function () {
+                    // Add video width to left and right padding, to get new width of modal window
+                    var modalBody = $(this).find('.modal-body');
+                    var modalDialog = $(this).find('.modal-dialog');
+                    var newModalWidth = vidWidth + parseInt(modalBody.css("padding-left")) + parseInt(modalBody.css("padding-right"));
+                    newModalWidth += parseInt(modalDialog.css("padding-left")) + parseInt(modalDialog.css("padding-right"));
+                    newModalWidth += 'px';
+                    // Set width of modal (Bootstrap 3.0)
+                    $(this).find('.modal-dialog').css('width', newModalWidth);
+                });
+
+                // Open Modal
+                $('#mediaModal').modal();
+            }
+</script>
+
+
+
+<script type="text/ng-template" id="myModalContent.html">
+
+    <div class="video-layout" >
+    <div class="video-centre">
+    <videogular vg-player-ready="VideoCtrl.onPlayerReady($API)" vg-complete="VideoCtrl.onCompleteVideo()" vg-responsive="true"
+    vg-theme="VideoCtrl.config.theme.url">
+    <vg-media vg-src="VideoCtrl.config.sources"
+    vg-tracks="VideoCtrl.config.tracks">
+    </vg-media>
+
+    <vg-controls>
+    <vg-play-pause-button></vg-play-pause-button>
+    <vg-time-display>{{ currentTime | date:'mm:ss':'+0000' }}</vg-time-display>
+    <vg-scrub-bar>
+    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+    </vg-scrub-bar>
+    <vg-time-display>{{ timeLeft | date:'mm:ss':'+0000' }}</vg-time-display>
+    <vg-volume>
+    <vg-mute-button></vg-mute-button>
+    <vg-volume-bar></vg-volume-bar>
+    </vg-volume>
+    <vg-fullscreen-button></vg-fullscreen-button>
+    </vg-controls>
+
+    <vg-overlay-play></vg-overlay-play>
+    <vg-buffering></vg-buffering>
+    <!-- <vg-poster vg-url='VideoCtrl.config.plugins.poster'></vg-poster>-->
+    </videogular>
+    </div>
+    </div>
+
+</script>
+

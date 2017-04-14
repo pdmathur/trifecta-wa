@@ -1,0 +1,164 @@
+
+<div>
+    <!-- header -->
+    <table class="table table-condensed" style="margin-bottom: 0px;">
+        <tbody>
+            <tr style="text-align: center;">
+                <th style="text-align: left; vertical-align: middle;padding-left: 20px;">
+
+                    <div class="pageTitle1">Coach's Dashboard</div>
+
+                </th>
+                <th style="text-align: center; vertical-align: middle;">
+                    <div class="btn-group">
+                        <button class="btn btn-primary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{TeamCtrl.currentTeam.name}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="t in TeamCtrl.teamsList"><a ng-click="TeamCtrl.selectTeam(t)">{{t.name}}</a></li>
+                        </ul>
+                    </div>
+
+                </th>
+                <th style="text-align: right;"><span><a href="http://www.trifectashot.com"><img
+                                src="img/logo.png" width="166" height="50" /></a></span></th>
+
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="panel panel-default" style="margin: 8px;">
+        <div  style="padding: 10px;">
+            <div style="display: inline-block;">            <h3 class="panel-title1">Coach's Corner</h3></div>
+            <div style="display: inline-block;margin-left: 25px">             
+                <button type="button" class="btn btn-default navbar-btn" ng-click="TeamCtrl.gotoCoachsCorner()">Go to Coach's Corner</button>
+            </div>
+        </div>
+
+        <table class="table table-responsive table-condensed  table-borderless" style="border:none;">
+
+            <tbody>
+                <tr ng-repeat="obj in TeamCtrl.dateRangeObj" style="padding:5px;">
+                    <td style="white-space: nowrap;width: 1%;">{{obj.title}}</td>
+                    <td ng-if="obj.type === 'R'"><div class="checkbox-inline" style="margin-left: 15px;">
+                            <label style="font-weight: normal;"><input  type="checkbox" ng-click="TeamCtrl.selectRange()" ng-checked="obj.selected" ng-model="obj.selected">{{obj.fromDate| date  : 'MM/dd/yy'}} - {{obj.toDate| date  : 'MM/dd/yy'}}</label>
+                        </div>
+                    </td>
+                    <td ng-if="obj.type === 'C'">
+                        <div class="checkbox-inline" style="margin-left: 15px;">
+                            <label style="font-weight: normal;"><input  type="checkbox" ng-click="TeamCtrl.selectCustomRange()" ng-checked="obj.selected" ng-model="obj.selected"> </label>
+                        </div>
+                        <div style="display: inline-block;margin-left: 25px;margin-top: -25px;">
+
+                            <div class="col-md-2">
+                                <p class="input-group">
+                                    <input type="text" class="form-control" ng-disabled="!TeamCtrl.isCustomRange" uib-datepicker-popup="{{format}}" ng-model="TeamCtrl.fromDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                            </div> 
+                            <div class="col-md-2" style="width: 1%;padding: 5px;margin-right: 10px;">
+                                <p class="input-group">
+                                    <label>To</label>
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="input-group">
+                                    <input type="text" class="form-control" ng-disabled="!TeamCtrl.isCustomRange" uib-datepicker-popup="{{format}}" ng-model="TeamCtrl.toDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr />
+    <!--
+   <uib-tabset active="active" >
+           <uib-tab index="0" heading="Player">Player content</uib-tab>
+           <uib-tab index="1" heading="Team">
+               <uib-tab-heading>
+           <i class="glyphicon glyphicon-bell"></i> Alert!
+         </uib-tab-heading>
+               
+               <div style="margin-top: 10px;">Team content</div></uib-tab>
+   
+       </uib-tabset> -->
+    <div class="panel panel-default" style="margin: 8px;">
+        <div  style="padding: 10px;">
+            <div style="display: inline-block;"><h3 class="panel-title1">Team Management</h3></div>
+
+            <div style="display: inline-block;margin-left: 25px;">
+                <button type="button" class="btn btn-default navbar-btn" ng-click="TeamCtrl.launchInviteView()">Invite Player</button>
+
+                <button type="button" class="btn btn-default navbar-btn" ng-show="globals.currentUser.isOwner" ng-click="TeamCtrl.launchTeamView()" style="margin-left:15px;">Create Team</button>
+
+            </div>
+            <div style="display: inline-block;margin-left: 20px;padding:0px;" class="alert alert-success" role="alert">{{TeamCtrl.actionMsg}}</div>
+        </div>
+        <!-- Teams -->
+
+        <table ng-show="globals.currentUser.isOwner" class="table table-responsive table-condensed table-hover" style="border:none;">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Team </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="obj in TeamCtrl.teamsList" style="padding:5px;">
+                    <td style="width: 10%;">{{$index + 1}}</td>
+                    <td style="width: 70%;">{{obj.name}}</td>
+
+                    <td style="width: 20%;">
+                        <button type="button" class="btn btn-default" ng-click="open1()" style="padding: 2px 4px 2px 4px;"><i ng-click="TeamCtrl.launchTeamView(obj)" class="glyphicon glyphicon-edit"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="open1()" style="margin-left: 15px;padding: 2px 4px 2px 4px;"><i  ng-click="TeamCtrl.deleteTeam(obj.id)" class="glyphicon glyphicon-trash"
+                           confirm="Are you sure?" confirm-title="Delete Team" confirm-settings="{size: 'sm'}" confirm-ok="Yes" confirm-cancel="No"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr ng-show="globals.currentUser.isOwner">
+        <!-- Players -->
+        <table class="table table-responsive table-condensed table-hover" style="border:none;">
+            <thead>
+                <tr>
+                    <th>S.No</th>                   
+                    <th>Nick name</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="obj in TeamCtrl.playersList" style="padding:5px;">
+                    <td style="width: 10%;">{{$index + 1}}</td>
+                    <td style="width: 35%;">{{obj.nickname}}</td>
+                    <td style="width: 35%;">{{obj.email}}</td>
+                    <td style="width: 20%;">
+                        <button type="button" class="btn btn-default" ng-click="open1()" style="padding: 2px 4px 2px 4px;"><i ng-click="TeamCtrl.launchPlayerView(obj)" class="glyphicon glyphicon-edit"></i></button>
+                        <button type="button" style="margin-left: 15px; padding: 2px 4px 2px 4px;" class="btn btn-default" ng-click="open1()"><i  ng-click="TeamCtrl.deletePlayer(obj.id)" class="glyphicon glyphicon-trash"
+                           confirm="Are you sure?" confirm-title="Delete Player" confirm-settings="{size: 'sm'}" confirm-ok="Yes" confirm-cancel="No"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info" role="alert" style="margin:10px;padding:15px;">
+            <div class="alert-link">Team member(s) will be sent email notification of action.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Invite Plyer -->
+<div ng-include="'team/invitePlayer.view.html'"></div>
+<div ng-include="'team/createTeam.view.html'"></div>
+<div ng-include="'team/createPlayer.view.html'"></div>
+

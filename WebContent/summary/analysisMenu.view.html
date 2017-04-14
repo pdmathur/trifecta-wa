@@ -1,0 +1,48 @@
+
+<div id="analysisMenu" class="panel panel-default"
+	style="margin-bottom: 0px;">
+
+	<div class="panel-heading">
+		<h3 class="panel-title" style="margin-left: 20px;">Station</h3>
+	</div>
+	<div class="panel-body" style="margin-left: 20px;">
+		<div ng-repeat="n in SummaryCtrl.stations">
+			<input type="radio" style="margin: 2px 5px 2px 5px;"
+				ng-model="SummaryCtrl.selectedStation" ng-value="n"
+				ng-click="SummaryCtrl.selectStation(n)">{{n}}<br />
+		</div>
+	</div>
+	<div class="panel-heading">
+		<h3 class="panel-title" style="margin-left: 20px;">Display</h3>
+	</div>
+	<div class="panel-body" style="margin-left: 20px;">
+		<input type="radio" ng-model="SummaryCtrl.shotType"
+			ng-click="SummaryCtrl.selectShot('all')" value="all"
+			style="margin: 2px 5px 2px 5px;">All shots<br /> <input
+			type="radio" ng-model="SummaryCtrl.shotType"
+			ng-click="SummaryCtrl.selectShot('hits')" value="hits"
+			style="margin: 2px 5px 2px 5px;">Hits<br /> <input
+			type="radio" ng-model="SummaryCtrl.shotType"
+			ng-click="SummaryCtrl.selectShot('miss')" value="miss"
+			style="margin: 2px 5px 2px 5px;">Misses<br />
+
+	</div>
+	<div class="panel-heading">
+		<h3 class="panel-title" style="margin-left: 20px;">Direction</h3>
+	</div>
+	<div class="panel-body" style="margin-left: 20px;">
+		<input type="radio" ng-model="SummaryCtrl.angleType"
+			ng-click="SummaryCtrl.selectAngle('lr')" value="lr"
+			style="margin: 2px 5px 2px 5px;">L/R<br /> <input
+			type="radio" ng-model="SummaryCtrl.angleType"
+			ng-click="SummaryCtrl.selectAngle('c')" value="c"
+			style="margin: 2px 5px 2px 5px;">Center<br /> <input
+			type="radio" ng-model="SummaryCtrl.angleType"
+			ng-click="SummaryCtrl.selectAngle('rl')" value="rl"
+			style="margin: 2px 5px 2px 5px;">R/L<br /> <input
+			type="radio" ng-model="SummaryCtrl.angleType"
+			ng-click="SummaryCtrl.selectAngle('all')" value="all"
+			style="margin: 2px 5px 2px 5px;">All<br />
+
+	</div>
+</div>

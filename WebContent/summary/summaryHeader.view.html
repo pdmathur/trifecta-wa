@@ -1,0 +1,101 @@
+
+<table class="table table-condensed" style="margin-bottom: 0px;">
+    <tbody>
+        <tr style="text-align: center;">
+            <th style="text-align: left; vertical-align: middle;"><span
+                    class="previous" style="padding-left: 5px;">
+                    <!--<a
+                        href="javascript:history.back()"><span aria-hidden="true">&larr;</span>
+                        Events</a>
+                    </li>--> <a href="#menu-toggle" id="menu-toggle"><span
+                            class="glyphicon glyphicon-align-justify"
+                            ></span></a></th>
+            <th style="text-align: center; vertical-align: middle;">
+                <div ng-if="SummaryCtrl.viewType === 'RS'" class="pageTitle">
+                    Trifecta Shot <sup>TM</sup> 1 - Page Performance Summary
+                </div>
+                <!-- Coach summary header -->
+                <div ng-if="SummaryCtrl.viewType === 'COACH_SUMMARY'"  >
+                    <div class="pageTitle" style="width:100%">
+                        Trifecta Shot <sup>TM</sup> Coach's Corner Summary
+                    </div><br/>
+                    <table class="table table-borderless" style="margin-bottom: 0px;width:100%;">
+                        <tbody>
+                            <tr style="text-align: center;">
+                                <th style="text-align: left; width:30%;">
+                                    <div style="display:inline;margin: 0 auto;">
+                                        <div class="btn-group" style="display: inline-block;float: left;margin-left: 25px;">
+                                            <button class="btn btn-primary btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{SummaryCtrl.currentTeam.name}} <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li ng-repeat="t in SummaryCtrl.coachTeams"><a ng-click="SummaryCtrl.selectTeam(t)">{{t.name}}</a></li>
+                                            </ul>
+                                        </div>
+                                    </th>
+                                    <th style="text-align: right; margin-top: 20px;width:60%;">
+
+                                        <div>
+                                            <div class="col-md-2" style="padding: 5px;margin-right: 10px;">
+                                                
+                                                    Date Range
+                                               
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="input-group">
+                                                    <input type="text" class="form-control"  uib-datepicker-popup="{{format}}" ng-model="SummaryCtrl.stDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                    </span>
+                                                </p>
+                                            </div> 
+                                            <div class="col-md-1" style="width: 1%;padding: 5px;margin-right: 10px;">
+                                                <p class="input-group">
+                                                    <label>To</label>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="input-group">
+                                                    <input type="text" class="form-control"  uib-datepicker-popup="{{format}}" ng-model="SummaryCtrl.endDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                             <div class="col-md-2" style="width: 1%;margin-right: 10px;">
+                                                        <button type="button" class="btn btn-default" ng-click="SummaryCtrl.reloadCoachSummary()">Go</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tbody></table>
+                </div>
+                <div ng-if="SummaryCtrl.viewType !== 'RS' && SummaryCtrl.viewType !== 'COACH_SUMMARY'">
+                    <div class="pageTitle">{{SummaryCtrl.title}} of Round</div>
+                    <ul class="nav nav-pills"
+                        style="float: left; margin-top: 0px; margin-left: 10px; cursor: pointer;">
+                        <li role="presentation"
+                            ng-repeat="n in [].constructor(5) track by $index"
+                            ng-if="SummaryCtrl.totalRounds > $index"
+                            ng-class="(SummaryCtrl.selectedRound == $index + 1) ? 'active' : 'normal'">
+                            <a ng-click="SummaryCtrl.changeRound($index + 1)">{{$index +
+                                            1}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </th>
+            <th style="text-align: right;"><span><a href="http://www.trifectashot.com"><img
+                            src="img/logo.png" width="166" height="50" /></a></span></th>
+
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>

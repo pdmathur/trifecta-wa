@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 28, 2016, 11:48:57 AM
+    Author     : naveenkumarmadala
+*/
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.line {
+	fill: none;
+}
+
+.x.axis path {
+	display: inline;
+}
+
+.y.axis path {
+	display: inline;
+}
+
+.axis.y .tick line {
+	stroke-width: 1px;
+	stroke: #ccc;
+	stroke-opacity: 1;
+}

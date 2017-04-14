@@ -1,0 +1,63 @@
+{
+  "_args": [
+    [
+      "videogular-poster",
+      "/Users/naveenkumarmadala/NetBeansProjects/Trifecta"
+    ]
+  ],
+  "_from": "videogular-poster@latest",
+  "_id": "videogular-poster@1.4.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/videogular-poster",
+  "_nodeVersion": "4.2.2",
+  "_npmUser": {
+    "email": "elecash@gmail.com",
+    "name": "elecash"
+  },
+  "_npmVersion": "3.3.9",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "videogular-poster",
+    "raw": "videogular-poster",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/videogular-poster/-/videogular-poster-1.4.1.tgz",
+  "_shasum": "baa3506303399ae94345100eadf38ff5ef909768",
+  "_shrinkwrap": null,
+  "_spec": "videogular-poster",
+  "_where": "/Users/naveenkumarmadala/NetBeansProjects/Trifecta",
+  "dependencies": {},
+  "description": "bower-videogular-poster =======================",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-release": "~0.7.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "baa3506303399ae94345100eadf38ff5ef909768",
+    "tarball": "http://registry.npmjs.org/videogular-poster/-/videogular-poster-1.4.1.tgz"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "gitHead": "1d472812339e9049b182227c4a596686489064f5",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "elecash",
+      "email": "elecash@gmail.com"
+    }
+  ],
+  "name": "videogular-poster",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {},
+  "version": "1.4.1"
+}

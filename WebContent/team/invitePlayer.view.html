@@ -1,0 +1,50 @@
+
+<script type="text/ng-template" id="invitePlayer.html">
+    <div class="modal-header">
+    <h3 class="modal-title">Invite Player</h3>
+    </div>
+    <div class="modal-body">
+    <form name="form" ng-submit="invite()" role="form" novalidate>
+    <div class="form-group"
+    ng-class="{ 'has-error': form.email.$dirty && form.email.$invalid }">
+    <label for="email">Email Id(s)</label> <input type="text" 
+    name="email" id="email" class="form-control" placeholder="Comma separated Email Ids" 
+    ng-model="inviteModel.email" multiple-emails required/> <span
+    ng-show="form.email.$dirty && form.email.$error.required"
+    class="help-block">email is required</span>
+      
+    </div>
+<!--
+    <div class="form-group"
+    ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+    <label for="username">Nick name</label> <input type="text"
+    name="username" id="username" class="form-control"
+    ng-model="inviteModel.nickName" required /> <span
+    ng-show="form.username.$dirty && form.username.$error.required"
+    class="help-block">Nick name is required</span>
+    </div>
+    -->
+    <div class="dropdown"> 
+    <label>Team</label>
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    {{selectedTeam.name}}
+    <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    
+    <li ng-repeat="t in teams"><a ng-click="selectTeam(t)">{{t.name}}</a></li>
+         </ul>
+    </div>
+
+    </form>
+    
+    </div>
+    <div class="modal-footer">
+    
+    <img ng-if="dataLoading"
+    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+    <button class="btn btn-primary" type="submit" ng-click="invite()" ng-disabled="form.$invalid || vm.dataLoading">Invite</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

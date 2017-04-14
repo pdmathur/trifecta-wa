@@ -1,0 +1,53 @@
+<div class="scoreDivContainer">
+	<div class="scoreDivText">
+		<b>Score : </b>
+	</div>
+
+	<div style='display: inline-block; position: relative; float: left;'
+		ng-repeat="n in SummaryCtrl.getNumber(SummaryCtrl.shotsPerRoundCnt) track by $index">
+
+		<svg height="40" width="20"
+			ng-if="SummaryCtrl.assetsArray[$index].hit == 1">
+        <rect x="0" y="4" width="20" height="1" class="scoreDivBorder" />
+
+        <rect
+				ng-if="SummaryCtrl.beginShot <= ($index + 1) && SummaryCtrl.endShot > $index"
+				x="0" y="5" width="20" height="2" class="scoreDivSelect" />
+        <circle cx="10" cy="20" r="5" stroke="black" stroke-width="1"
+				fill="green" />
+        <rect ng-if="$index % 5 == 0" x="0" y="5" width="1" height="30"
+				class="scoreDivBorder" />
+        <rect x="0" y="34" width="20" height="1" class="scoreDivBorder" />
+        <rect ng-if="$index == 24" x="19" y="5" width="1" height="30"
+				class="scoreDivBorder" />
+
+        Sorry, your browser does not support inline SVG.  
+        </svg>
+		<svg height="40" width="20"
+			ng-if="SummaryCtrl.assetsArray[$index].hit != 1">
+        <rect x="0" y="4" width="20" height="1" class="scoreDivBorder" />
+
+        <rect
+				ng-if="SummaryCtrl.beginShot <= ($index + 1) && SummaryCtrl.endShot > $index"
+				x="0" y="5" width="20" height="2" class="scoreDivSelect" />
+        <circle ng-if="$index<SummaryCtrl.assetsArray.length" cx="10"
+				cy="20" r="5" stroke="black" stroke-width="1" fill="red" />
+                <circle
+				ng-if="$index>=SummaryCtrl.assetsArray.length || !SummaryCtrl.assetsArray[$index].asset"
+				cx="10" cy="20" r="5" stroke="gray" stroke-width="1"
+				fill="lightgray" />
+
+        <rect ng-if="$index % 5 == 0 || $index == 25" x="0" y="5"
+				width="1" height="30" class="scoreDivBorder" />
+        <rect x="0" y="34" width="20" height="1" class="scoreDivBorder" />
+        <rect ng-if="$index == 24" x="19" y="5" width="1" height="30"
+				class="scoreDivBorder" />
+
+        Sorry, your browser does not support inline SVG.  
+        </svg>
+
+	</div>
+	<div class="scoreDivText">
+		<b>{{SummaryCtrl.roundScore}}</b>
+	</div>
+</div>

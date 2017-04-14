@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+<meta charset="utf-8">
+<title>Trifecta Shot Systems</title>
+<link rel="stylesheet"
+	href="bower_components/bootstrap-3.3.7-dist/css/bootstrap.css">
+
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/animations.css">
+
+
+<!-- Custom CSS -->
+<link href="css/simple-sidebar.css" rel="stylesheet">
+<link href="css/linechart.css" rel="stylesheet">
+    <link href="css/full-slider.css" rel="stylesheet">
+
+<!-- video CSS -->
+<link rel="stylesheet"
+	href="bower_components/videogular-themes-default/videogular.min.css">
+<link rel="stylesheet" href="css/video.css">
+
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/ui-bootstrap-tpls-2.1.3.min.js"></script>
+<script src="bower_components/angular-confirm/angular-confirm.min.js"></script>
+<!-- <script src="bower_components/angular-touch/angular-touch.min.js"></script> -->
+
+<script src="js/angu-fixed-header-table.js"></script>
+
+<script src="js/d3/d3.min.js"></script>
+
+ 
+
+<script src="app.js"></script>
+<script src="js/appGlobals.js"></script>
+
+<script src="app-services/authentication.service.js"></script>
+<script src="app-services/event.service.js"></script>
+<script src="app-services/teamManagement.service.js"></script>
+<script src="app-services/flash.service.js"></script>
+
+<!-- Real user service that uses an api -->
+<!-- <script src="app-services/user.service.js"></script> -->
+
+<!-- Fake user service for demo that uses local storage -->
+
+<script src="login/login.controller.js"></script>
+<script src="team/teamManagement.controller.js"></script>
+<script src="team/invitePlayer.controller.js"></script>
+<script src="team/createPlayer.controller.js"></script>
+<script src="summary/summary.controller.js"></script>
+<script src="summary/video.controller.js"></script>
+<script src="analysis/barChart.js"></script>
+<script src="summary/carousel.controller.js"></script>
+
+</head>
+<body>
+
+	<div class="view-container">
+		<div ng-view class="view-frame"></div>
+	</div>
+	<div id="fsdiv" onclick="hidefs()"></div>
+	<!-- jQuery -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="bower_components/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="bower_components/videogular/videogular.js"></script>
+	<script src="bower_components/videogular-controls/vg-controls.js"></script>
+	<script
+		src="bower_components/videogular-overlay-play/vg-overlay-play.js"></script>
+	<script src="bower_components/videogular-poster/vg-poster.js"></script>
+	<script src="bower_components/videogular-buffering/vg-buffering.js"></script>
+        
+        <script src="js/jquery.stickytableheaders.min.js"></script>
+
+</body>
+</html>
