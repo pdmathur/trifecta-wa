@@ -10,7 +10,8 @@ angular.module('app').controller('ModalCarouselCtrl', function ($scope, $uibModa
     $scope.activeVideoIndex = $scope.shotNo;
     $scope.posterSrc = "";
     $scope.initController = function () {
-        $scope.videoSrc = $sce.trustAsResourceUrl($scope.animationArray[$scope.activeVideoIndex].asset);
+    	if (isVideo)
+           $scope.videoSrc = $sce.trustAsResourceUrl($scope.animationArray[$scope.activeVideoIndex].asset);
     }();
 
     $scope.trustSrc = function(src) {

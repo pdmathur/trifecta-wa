@@ -5,8 +5,8 @@
             .module('app')
             .controller('SummaryController', SummaryController);
 
-    SummaryController.$inject = ['$scope', '$location', '$routeParams', 'EventService', '$rootScope', '$sce', '$timeout', '$filter', 'filterFilter', '$uibModal', 'TeamMgmtService'];
-    function SummaryController($scope, $location, $routeParams, EventService, $rootScope, $sce, $timeout, $filter, filterFilter, $uibModal, TeamMgmtService) {
+    SummaryController.$inject = ['$scope', '$location', '$routeParams', '$cookieStore','EventService', '$rootScope', '$sce', '$timeout', '$filter', 'filterFilter', '$uibModal', 'TeamMgmtService'];
+    function SummaryController($scope, $location, $routeParams, $cookieStore, EventService, $rootScope, $sce, $timeout, $filter, filterFilter, $uibModal, TeamMgmtService) {
         var ctrl = this;
         ctrl.viewType = $routeParams.viewType;
         ctrl.teamId = $routeParams.teamId;
@@ -79,14 +79,17 @@
         ctrl.goToAnalysisSTAO = goToAnalysisSTAO;
 
         ctrl.goToTeamMgmt = goToTeamMgmt;
+        ctrl.buildDateRanges = buildDateRanges;
+        ctrl.fullDate = fullDate;
 
         initController();
         function initController() {
             $scope.isLoading = true;
-            if ($routeParams.stDate != undefined)
-            	ctrl.stDate = new Date($routeParams.stDate);
+            buildDateRanges(); // read cookies, if available
+            if ($routeParams.stDate != undefined) // override
+            	ctrl.stDate = fullDate($routeParams.stDate);
             if ($routeParams.endDate != undefined)
-            	ctrl.endDate = new Date($routeParams.endDate);
+            	ctrl.endDate = fullDate($routeParams.endDate);
             	
             ctrl.animationType = $rootScope.animationType;
             getTemplate();
@@ -126,7 +129,7 @@
         function getPerformanceSummaryData() {
         	// Do not cache previous data ...
             if (ctrl.perfSumm !== undefined && ctrl.selectUserId === ctrl.perfSumm.userId) {
-                $scope.isLoading = false;
+                //$scope.isLoading = false;
                 return;
             }
             ctrl.perfSumm = {};
@@ -142,7 +145,7 @@
                 if(ctrl.perfData.length >0 ){
                     selectEvent(ctrl.perfData[0].eventId);
                 }
-                $scope.isLoading = false;
+                //$scope.isLoading = false;
             });
 
         }
@@ -224,6 +227,8 @@
             if (userId !== undefined)
             	ctrl.selectUserId = userId;
             
+            $scope.isLoading = true;    
+
             ctrl.summaryView = [];
             ctrl.stPov = [];
             ctrl.gnPov = [];
@@ -297,15 +302,18 @@
             } else if (ctrl.animationType == 'gnpov') {
                 ctrl.animationArray = ctrl.gnPov[ctrl.selectedRound];
             }
-            ctrl.roundScore = calculateScore() + "/" + ctrl.assetsArray.length;
-            ctrl.shotsPerRoundCnt = 25;
-            console.log("SummaryCtrl.assetsArray==>" + ctrl.assetsArray.length);
+            if (ctrl.assetsArray !== undefined)
+            {
+                ctrl.roundScore = calculateScore() + "/" + ctrl.assetsArray.length;
+                ctrl.shotsPerRoundCnt = 25;
+                console.log("SummaryCtrl.assetsArray==>" + ctrl.assetsArray.length);
+            }
 
             buildAnalysisView();
             selectStation("All");
-            if (!ctrl.initialLoad) {
-                $scope.isLoading = false;
-            }
+            //if (!ctrl.initialLoad) {
+            //    $scope.isLoading = false;
+            //}
         }
         function calculateScore() {
             var count = 0;
@@ -932,126 +940,100 @@
             }
             ctrl.title = "" + tmp + ", Station " + ctrl.selectedStation;
         }
-
-
+        
         //Coach
         function goToTeamMgmt() {
             $location.path("/teamManagement")
         }
 
-
         //DatePicker code...Should move to separate file and use it from that controller..
-        $scope.clear = function () {
-            if ($scope.popup1.opened) {
-                ctrl.stDate = null;
-            } else {
-                ctrl.endDate = null;
-            }
-        };
+        $scope.popup1 = {
+        		opened: false
+        }
 
-        $scope.inlineOptions = {
-            customClass: getDayClass,
-            minDate: new Date(),
-            showWeeks: true
-        };
+        $scope.popup2 = {
+        		opened: false
+        }
 
-        $scope.dateOptions = {
-            dateDisabled: disabled,
+        $scope.addDays = function (date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+        
+        $scope.dateOptions1 = {
             formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
+            maxDate: $scope.addDays(new Date(), 1 * 365),
+            minDate: $scope.addDays(new Date(), -2 * 365),
             startingDay: 1
         };
 
-        // Disable weekend selection
-        function disabled(data) {
-            /*var date = data.date,
-             mode = data.mode;
-             return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);*/
-            return false;
+        $scope.dateOptions2 = {
+                formatYear: 'yy',
+                maxDate: $scope.addDays(new Date(), 1 * 365),
+                minDate: $scope.addDays(new Date(), -2 * 365),
+                startingDay: 1
+            };
+
+        $scope.dateBlur = function () { 
+        	// Clear the end date if it does not make sense wrt start date or global bounds
+        	if (ctrl.endDate == null || ctrl.endDate > $scope.dateOptions2.maxDate || ctrl.endDate < $scope.dateOptions2.minDate || (ctrl.stDate != null && ctrl.endDate < ctrl.stDate))
+        		ctrl.endDate = null;
+        	// Clear start date if out of global bounds
+        	if (ctrl.stDate == null || ctrl.stDate > $scope.dateOptions1.maxDate || ctrl.stDate < $scope.dateOptions1.minDate)
+        	{
+        		ctrl.stDate = null;
+        		$scope.dateOptions2.minDate = $scope.addDays(new Date(), -2 * 365);
+        	}
         }
-
-        $scope.toggleMin = function () {
-            $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-            $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-        };
-
-        $scope.toggleMin();
-
+        
         $scope.open1 = function () {
-            $scope.dateOptions.minDate = new Date(2015, 1, 1);
-            if (ctrl.endDate !== undefined ) {
-                $scope.dateOptions.maxDate = ctrl.endDate;
-            } else {
-                $scope.dateOptions.maxDate = new Date(2020, 12, 30);
-            }
+        	// allow start date to be anything
             $scope.popup1.opened = true;
         };
 
         $scope.open2 = function () {
-            $scope.dateOptions.maxDate = new Date(2020, 5, 22);
-            if (ctrl.stDate !== undefined) {
-                $scope.dateOptions.minDate = ctrl.stDate;
+        	// limit end date or base on start date
+            if (ctrl.stDate !== undefined && ctrl.stDate != null ) {
+                $scope.dateOptions2.minDate = ctrl.stDate;
             } else {
-                $scope.dateOptions.minDate = null;
+                $scope.dateOptions2.minDate = $scope.addDays(new Date(), -2 * 365);
             }
             $scope.popup2.opened = true;
         };
 
-        /* $scope.setDate = function (year, month, day) {
-         if ($scope.popup1.opened) {
-         $scope.stDate = new Date(year, month, day);
-         } else {
-         $scope.endDate = new Date(year, month, day);
-         
-         }
-         };*/
+        // see that this matches logic in TeamManagementController
+        function buildDateRanges() {
+        	var title = $cookieStore.get('rangeTitle');
+        	if (title == null)
+        		return;
+            var curr = new Date;
+            if (title === "Current Week") {
+                ctrl.stDate = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+                ctrl.endDate = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6));
+            } else if (title === "Last 4 Weeks") {
+            	ctrl.stDate = new Date(curr.setDate(curr.getDate() - curr.getDay() - 21));
+            	ctrl.endDate = new Date(curr.setDate(curr.getDate() + 27));
+            } else if (title === "Custom Range") {
+            	ctrl.stDate = new Date($cookieStore.get('fromDate'));
+            	ctrl.endDate = new Date($cookieStore.get('toDate'));
+            }
+        }
 
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
 
-        $scope.popup1 = {
-            opened: false
-        };
-
-        $scope.popup2 = {
-            opened: false
-        };
-
-        var tomorrow1 = new Date();
-        tomorrow1.setDate(tomorrow1.getDate() + 1);
-        var afterTomorrow = new Date();
-        afterTomorrow.setDate(tomorrow1.getDate() + 1);
-        $scope.events = [
-            {
-                date: tomorrow1,
-                status: 'full'
-            },
-            {
-                date: afterTomorrow,
-                status: 'partially'
-            }
-        ];
-
-        function getDayClass(data) {
-            var date = data.date,
-                    mode = data.mode;
-            if (mode === 'day') {
-                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
-                for (var i = 0; i < $scope.events.length; i++) {
-                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
-
-                    if (dayToCheck === currentDay) {
-                        return $scope.events[i].status;
-                    }
-                }
-            }
-
-            return '';
-        }
-
-
+    }
+    
+    function fullDate(str)
+    {
+    	var d = new Date();
+    	var ymd = str.split('-');
+    	if (ymd.length == 3) {
+    		d.setFullYear(ymd[0],parseInt(ymd[1])-1,ymd[2]);
+    		return d;
+    	}
+    	return null;
     }
 })();

@@ -41,19 +41,19 @@
             <tbody>
                 <tr ng-repeat="obj in TeamCtrl.dateRangeObj" style="padding:5px;">
                     <td style="white-space: nowrap;width: 1%;">{{obj.title}}</td>
-                    <td ng-if="obj.type === 'R'"><div class="checkbox-inline" style="margin-left: 15px;">
-                            <label style="font-weight: normal;"><input  type="checkbox" ng-click="TeamCtrl.selectRange()" ng-checked="obj.selected" ng-model="obj.selected">{{obj.fromDate| date  : 'MM/dd/yy'}} - {{obj.toDate| date  : 'MM/dd/yy'}}</label>
+                    <td ng-if="obj.type === 'R'">
+                        <div class="checkbox-inline" style="margin-left: 15px;">
+                            <label style="font-weight: normal;"><input  type="checkbox" ng-click="TeamCtrl.selectRange(obj.title)" ng-checked="obj.selected" ng-model="obj.selected">{{obj.fromDate| date  : 'MM/dd/yy'}} - {{obj.toDate| date  : 'MM/dd/yy'}}</label>
                         </div>
                     </td>
                     <td ng-if="obj.type === 'C'">
-                        <div class="checkbox-inline" style="margin-left: 15px;">
-                            <label style="font-weight: normal;"><input  type="checkbox" ng-click="TeamCtrl.selectCustomRange()" ng-checked="obj.selected" ng-model="obj.selected"> </label>
+                        <div class="checkbox-inline" style="margin-left: 15px;margin-top: -20px">
+                            <label style="font-weight: normal;"><input  type="checkbox" ng-click="TeamCtrl.selectCustomRange(obj.title)" ng-checked="obj.selected" ng-model="obj.selected"> </label>
                         </div>
-                        <div style="display: inline-block;margin-left: 25px;margin-top: -25px;">
-
+                        <div style="display: block;margin-left: 25px;margin-top: -25px;">
                             <div class="col-md-2">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" ng-disabled="!TeamCtrl.isCustomRange" uib-datepicker-popup="{{format}}" ng-model="TeamCtrl.fromDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                    <input type="text" class="form-control" ng-disabled="!TeamCtrl.isCustomRange" uib-datepicker-popup="{{format}}" ng-model="TeamCtrl.fromDate" is-open="popup1.opened" datepicker-options="dateOptions1" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-blur="dateBlur()" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-2">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" ng-disabled="!TeamCtrl.isCustomRange" uib-datepicker-popup="{{format}}" ng-model="TeamCtrl.toDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                    <input type="text" class="form-control" ng-disabled="!TeamCtrl.isCustomRange" uib-datepicker-popup="{{format}}" ng-model="TeamCtrl.toDate" is-open="popup2.opened" datepicker-options="dateOptions2" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-blur="dateBlur()" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>

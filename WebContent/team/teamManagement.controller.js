@@ -5,15 +5,16 @@
             .module('app')
             .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$location', '$uibModal', '$filter', 'filterFilter', 'TeamMgmtService'];
-    function TeamController($scope, $location, $uibModal, $filter, filterFilter, TeamMgmtService) {
+    TeamController.$inject = ['$scope', '$location', '$cookieStore', '$uibModal', '$filter', 'filterFilter', 'TeamMgmtService'];
+    function TeamController($scope, $location, $cookieStore, $uibModal, $filter, filterFilter, TeamMgmtService) {
         var TeamCtrl = this;
 
-        TeamCtrl.dateRangeTitles = ["Current Week", "Last 4 Weeks", "Spring Season", "Fall Season", "Custom Range"];
+        TeamCtrl.dateRangeTitles = ["Current Week", "Last 4 Weeks", "Custom Range"];
+        TeamCtrl.savedTitle = $cookieStore.get('rangeTitle') || TeamCtrl.dateRangeTitles[0];
         TeamCtrl.dateRangeObj = [];
         TeamCtrl.isCustomRange = false;
-        TeamCtrl.fromDate;
-        TeamCtrl.toDate;
+        TeamCtrl.fromDate = ($cookieStore.get('fromDate') == null)? null : new Date($cookieStore.get('fromDate'));
+        TeamCtrl.toDate = ($cookieStore.get('toDate') == null)? null : new Date($cookieStore.get('toDate'));
         TeamCtrl.currentTeam = {};
         TeamCtrl.teamsList = [];
         TeamCtrl.playersList = [];
@@ -43,13 +44,13 @@
             for (var i = 0; i < TeamCtrl.dateRangeTitles.length; i++) {
                 var obj = {};
                 obj.title = TeamCtrl.dateRangeTitles[i];
-                obj.selected = false;
+                obj.selected = (TeamCtrl.savedTitle === obj.title)? true : false;
                 if (obj.title === "Custom Range") {
                     obj.type = "C";
+                    TeamCtrl.isCustomRange = obj.selected;
                 } else {
                     obj.type = "R";
                     if (obj.title === "Current Week") {
-                        obj.selected = true;
                         var curr = new Date;
                         var firstday = new Date(curr.setDate(curr.getDate() - curr.getDay()));
                         var lastday = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6));
@@ -66,40 +67,43 @@
                 TeamCtrl.dateRangeObj.push(obj);
             }
         }
-        function selectRange() {
-            TeamCtrl.dateRangeObj[TeamCtrl.dateRangeObj.length - 1].selected = false;
-            $scope.fromDate = "";
-            $scope.toDate = "";
+        function selectRange(title) {
+            for (var i=0; i<TeamCtrl.dateRangeObj.length; i++) // uncheck others
+            	TeamCtrl.dateRangeObj[i].selected = (TeamCtrl.dateRangeObj[i].title != title)? false : true;
             TeamCtrl.isCustomRange = false;
         }
-        function selectCustomRange() {
-            if (TeamCtrl.dateRangeObj[TeamCtrl.dateRangeObj.length - 1].selected) {
-                TeamCtrl.isCustomRange = true;
-                for (var i = 0; i < TeamCtrl.dateRangeObj.length - 1; i++) {
-                    TeamCtrl.dateRangeObj[i].selected = false;
-                }
-            } else {
-                TeamCtrl.isCustomRange = false;
-                TeamCtrl.dateRangeObj[0].selected = true;
-            }
+        function selectCustomRange(title) {
+            for (var i=0; i<TeamCtrl.dateRangeObj.length; i++) // uncheck others
+            	TeamCtrl.dateRangeObj[i].selected = (TeamCtrl.dateRangeObj[i].title != title)? false : true;
+            TeamCtrl.isCustomRange = true;
         }
 
         function gotoCoachsCorner() {
             var selectedDates = filterFilter(TeamCtrl.dateRangeObj, {selected: true});
+
+            if (selectedDates.length > 0) {
+               $cookieStore.put('rangeTitle', selectedDates[0].title);
+               $cookieStore.put('fromDate', TeamCtrl.fromDate);
+               $cookieStore.put('toDate', TeamCtrl.toDate);
+            }
+
             if (TeamCtrl.isCustomRange) {
-                if (TeamCtrl.fromDate === undefined || TeamCtrl.toDate === undefined) {
-                    //TODO show alert
-                } else {
-                    var fromDate = $filter('date')(new Date(TeamCtrl.fromDate), 'yyyy-MM-dd');
-                    var toDate = $filter('date')(new Date(TeamCtrl.toDate), 'yyyy-MM-dd');
-                    $location.path('/summary/COACH_SUMMARY/'+TeamCtrl.currentTeam.id+"/" + fromDate + "/" + toDate);
-                }
+            	var fromDate = "";
+                if (TeamCtrl.fromDate === undefined)
+                	fromDate = $filter('date')($scope.dateOptions1.minDate, 'yyyy-MM-dd');
+                else
+                	fromDate = $filter('date')(new Date(TeamCtrl.fromDate), 'yyyy-MM-dd');
+
+                var toDate = "";
+                if (TeamCtrl.toDate === undefined)
+                	toDate = $filter('date')($scope.dateOptions2.maxDate, 'yyyy-MM-dd');
+                else
+                	toDate = $filter('date')(new Date(TeamCtrl.toDate), 'yyyy-MM-dd');
+                $location.path('/summary/COACH_SUMMARY/'+TeamCtrl.currentTeam.id+"/" + fromDate + "/" + toDate);
             } else if (selectedDates.length > 0) {
                 var toDate = $filter('date')(new Date(selectedDates[0].toDate), 'yyyy-MM-dd');
-                var fromDate = $filter('date')(new Date(selectedDates[selectedDates.length - 1].fromDate), 'yyyy-MM-dd');
+                var fromDate = $filter('date')(new Date(selectedDates[0].fromDate), 'yyyy-MM-dd');
                 $location.path('/summary/COACH_SUMMARY/'+TeamCtrl.currentTeam.id+"/" + fromDate + "/" + toDate);
-
-
             } else {
                 //TODO show alert
             }
@@ -244,120 +248,65 @@
 
         }
 
+        //DatePicker code...Should move to separate file and use it from that controller..
+        $scope.popup1 = {
+        		opened: false
+        }
 
+        $scope.popup2 = {
+        		opened: false
+        }
 
-
-//DatePicker code...Should move to separate file and use it from that controller..
-        $scope.clear = function () {
-            if ($scope.popup1.opened) {
-                TeamCtrl.fromDate = null;
-            } else {
-                TeamCtrl.toDate = null;
-            }
-        };
-
-        $scope.inlineOptions = {
-            customClass: getDayClass,
-            minDate: new Date(),
-            showWeeks: true
-        };
-
-        $scope.dateOptions = {
-            dateDisabled: disabled,
+        $scope.addDays = function (date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+        
+        $scope.dateOptions1 = {
             formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
+            maxDate: $scope.addDays(new Date(), 1 * 365),
+            minDate: $scope.addDays(new Date(), -2 * 365),
             startingDay: 1
         };
 
-        // Disable weekend selection
-        function disabled(data) {
-//            var date = data.date,
-//                    mode = data.mode;
-//            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-            return false;
+        $scope.dateOptions2 = {
+                formatYear: 'yy',
+                maxDate: $scope.addDays(new Date(), 1 * 365),
+                minDate: $scope.addDays(new Date(), -2 * 365),
+                startingDay: 1
+            };
+
+        $scope.dateBlur = function () { 
+        	// Clear the end date if it does not make sense wrt start date or global bounds
+        	if (TeamCtrl.toDate == null || TeamCtrl.toDate > $scope.dateOptions2.maxDate || TeamCtrl.toDate < $scope.dateOptions2.minDate || (TeamCtrl.fromDate != null && TeamCtrl.toDate < TeamCtrl.fromDate))
+        		TeamCtrl.toDate = null;
+        	// Clear start date if out of global bounds
+        	if (TeamCtrl.fromDate == null || TeamCtrl.fromDate > $scope.dateOptions1.maxDate || TeamCtrl.fromDate < $scope.dateOptions1.minDate)
+        	{
+        		TeamCtrl.fromDate = null;
+        		$scope.dateOptions2.minDate = $scope.addDays(new Date(), -2 * 365);
+        	}
         }
-
-        $scope.toggleMin = function () {
-            $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-            $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-        };
-
-        $scope.toggleMin();
-
+        
         $scope.open1 = function () {
-            $scope.dateOptions.minDate = new Date(2015, 1, 1);
-            if (TeamCtrl.toDate !== undefined) {
-                $scope.dateOptions.maxDate = TeamCtrl.toDate;
-            } else {
-                $scope.dateOptions.maxDate = new Date(2020, 12, 30);
-            }
+        	// allow start date to be anything
             $scope.popup1.opened = true;
         };
 
         $scope.open2 = function () {
-            $scope.dateOptions.maxDate = new Date(2020, 5, 22);
-            if (TeamCtrl.fromDate !== undefined) {
-                $scope.dateOptions.minDate = TeamCtrl.fromDate;
+        	// limit end date or base on start date
+            if (TeamCtrl.fromDate !== undefined && TeamCtrl.fromDate != null ) {
+                $scope.dateOptions2.minDate = TeamCtrl.fromDate;
             } else {
-                $scope.dateOptions.minDate = null;
+                $scope.dateOptions2.minDate = $scope.addDays(new Date(), -2 * 365);
             }
             $scope.popup2.opened = true;
-        };
-
-        $scope.setDate = function (year, month, day) {
-            if ($scope.popup1.opened) {
-                $scope.fromDate = new Date(year, month, day);
-            } else {
-                $scope.toDate = new Date(year, month, day);
-
-            }
         };
 
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
-
-        $scope.popup1 = {
-            opened: false
-        };
-
-        $scope.popup2 = {
-            opened: false
-        };
-
-        var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        var afterTomorrow = new Date();
-        afterTomorrow.setDate(tomorrow.getDate() + 1);
-        $scope.events = [
-            {
-                date: tomorrow,
-                status: 'full'
-            },
-            {
-                date: afterTomorrow,
-                status: 'partially'
-            }
-        ];
-
-        function getDayClass(data) {
-            var date = data.date,
-                    mode = data.mode;
-            if (mode === 'day') {
-                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
-                for (var i = 0; i < $scope.events.length; i++) {
-                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
-
-                    if (dayToCheck === currentDay) {
-                        return $scope.events[i].status;
-                    }
-                }
-            }
-
-            return '';
-        }
 
     }
 
