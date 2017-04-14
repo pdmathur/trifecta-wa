@@ -12,17 +12,44 @@
         <div class="snumdiv1">
           {{item.shot}}
         </div>
-      </div>
+
+    </div>
       
+      
+       </div>
       <!-- video -->
-      <div ng-if="isVideo == 1" uib-slide ng-repeat="item in assetsArray track by $index" index="$index" class="fsImg full-screen">
-        <video class="fsImg" id="v_{{item.shot}}" ng-src="{{trustSrc(item.asset)}}" controls preload  ></video>
+      <div ng-if="isVideo == 1"  class="fsImg full-screen"
+       style="position:relative;background-image:url('{{item.asset}}');">
+               
+      <a role="button" href="" class="left carousel-control" style="z-index:9999" ng-click="prevVideo()" ng-class="{ disabled: isPrevVideoDisabled() }" >
+            <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">previous</span>
+       </a>
+       <a role="button"  class="right carousel-control" style="z-index:9999" ng-click="nextVideo()" ng-class="{ disabled: isNextVideDisabled() }" >
+            <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">next</span>
+       </a>
+       <div class="modal-video" style="width:100%;height:100%;">
+            <div class="centerDiv embed-responsive " style="background-image:url('{{posterSrc}}');">
+             
+                  <iframe width="600" height"450" class="videoInsert embed-responsive-item"  ng-src="{{videoSrc}}" controls preload autoplay
+                                    webkitallowfullscreen mozallowfullscreen allowfullscreen >
+                                            </iframe>
+   
+            </div>
+       </div>
+          <!--  <video class="fsImg" id="v_{{item.shot}}" ng-src="{{trustSrc(item.asset)}}" controls preload  ></video> -->
             
         <div class="snumdiv1">
-          {{item.shot}}
+          {{activeVideoIndex + 1}}
         </div>
-      </div>
-    </div>
+        <div ng-if="isMobile == 1" class="closeBtn" ng-click="cancel()">
+          <span class="glyphicon glyphicon-remove" ng-click="cancel()"></span>
+
+        </div>
+     </div>
+     
+       
   </div>
     
    
@@ -30,43 +57,67 @@
 </script>
 
 <style>
-    
-.full-screen {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.modal-dialog {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-.modal-content {
-    height: 100%;
-    min-height: 100%;
-    height: auto;
-    border-radius: 0;
-    background-color: black;
+    .videoInsert {
+        position: absolute; 
+        right: 0; 
+        bottom: 0;
+        min-width: 100%; 
+        width: auto; 
+        height: auto; 
+        background-size: cover;
+        overflow: hidden;
 
-}
-.carousel-inner{
-    position: relative;
-    width: 100%;
-    /* overflow: hidden; */
-}
-.carousel-control {
-    position: absolute;
-    top: 10%;
-    bottom: 10%;
-    left: 0;
-    width: 15%;
-    font-size: 20px;
-    color: #fff;
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
-    background-color: rgba(0, 0, 0, 0);
-    filter: alpha(opacity=50);
-    opacity: .5;
-}    
+    }
+    .centerDiv {
+        width: 600px;
+        height: 450px;
+
+        position:absolute; /*it can be fixed too*/
+        left:0; right:0;
+        top:0; bottom:0;
+        margin:auto;
+
+        /*this to solve "the content will not be cut when the window is smaller than the content": */
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+    }
+    .full-screen {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .modal-dialog {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    .modal-content {
+        height: 100%;
+        min-height: 100%;
+        height: auto;
+        border-radius: 0;
+        background-color: black;
+
+    }
+    .carousel-inner{
+        position: relative;
+        width: 100%;
+        /* overflow: hidden; */
+    }
+    .carousel-control {
+        position: absolute;
+        top: 10%;
+        bottom: 10%;
+        left: 0;
+        width: 15%;
+        font-size: 20px;
+        color: #fff;
+        text-align: center;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+        background-color: rgba(0, 0, 0, 0);
+        filter: alpha(opacity=50);
+        opacity: .5;
+    }    
 </style>

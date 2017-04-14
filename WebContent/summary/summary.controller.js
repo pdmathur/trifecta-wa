@@ -414,15 +414,15 @@
 //
 //                fs.style.display = "block";
             } else {
-                if(deviceIsMobile){
+                /*if(deviceIsMobile){
                     play("single", shotNo);
                     return;
-                }else{
+                }else{*/
                     isVideo = 1;
                     if (ctrl.animationArray == undefined) {
                         ctrl.animationArray = ctrl.stPov[ctrl.selectedRound];
                     }
-            }
+                //}
             }
              var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
@@ -437,11 +437,10 @@
                         return shotNo;
                     },
                     assetsArray: function () {
-                        if(isVideo === 0){
-                            return ctrl.assetsArray;
-                        }else{
-                            return ctrl.animationArray;
-                        }
+                         return ctrl.assetsArray;
+                    },
+                    animationArray: function () {
+                          return ctrl.animationArray;
                     }
                 }
             });

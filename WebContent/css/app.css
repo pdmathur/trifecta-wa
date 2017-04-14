@@ -221,6 +221,16 @@ body {
     font-weight: bold;
     z-index: 20020
 }
+.closeBtn {
+    font-size: 20.0pt;
+    font-family: Times New Roman;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-weight: bold;
+    z-index: 999999;
+}
 
 .shot-miss {
     border: 2px solid red;

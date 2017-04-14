@@ -1,4 +1,4 @@
-var host = "/trifecta";//
+var host = "/trifecta";//"https://dev.trifectashot.com/trifecta";//
 var S3bucket = "https://s3.amazonaws.com/tfcta2/img/";
 var PLOT_LINE_WIDTH = 0.5;
 var PLOT_PLUS_LINE_WIDTH = 1;
