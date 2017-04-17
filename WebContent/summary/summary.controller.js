@@ -129,7 +129,6 @@
         function getPerformanceSummaryData() {
         	// Do not cache previous data ...
             if (ctrl.perfSumm !== undefined && ctrl.selectUserId === ctrl.perfSumm.userId) {
-                //$scope.isLoading = false;
                 return;
             }
             ctrl.perfSumm = {};
@@ -145,14 +144,12 @@
                 if(ctrl.perfData.length >0 ){
                     selectEvent(ctrl.perfData[0].eventId);
                 }
-                //$scope.isLoading = false;
             });
 
         }
         //Coach summary data
         function getCoachSummaryData() {
             if (ctrl.coachSummData !== undefined) {
-                $scope.isLoading = false;
                 return;
             }
             TeamMgmtService.GetTeams(function (response) {
@@ -203,11 +200,8 @@
                     if (ctrl.coachSummData.length > 0) {
                         selectEvent(ctrl.coachSummData[0].eventId);
                     }
-                    $scope.isLoading = false;
-
                 } else {
                     console.log("No data GetCoachSummary");
-                    $scope.isLoading = false;
                 }
             });
         }
@@ -265,6 +259,7 @@
                     fillAssetsArray();
                     ctrl.beginShot = 0;
                     ctrl.endShot = ctrl.assetsArray.length;
+                    ctrl.gunTgtPos = [];
                     ctrl.runningCnt = 0; // reset
                     getTargetGunPositions();
                 });
@@ -311,9 +306,6 @@
 
             buildAnalysisView();
             selectStation("All");
-            //if (!ctrl.initialLoad) {
-            //    $scope.isLoading = false;
-            //}
         }
         function calculateScore() {
             var count = 0;
@@ -332,7 +324,6 @@
         }
         function loadAnimationAnalysis(animationType) {
             // $location.path('/animationSummary/' + ctrl.eventId + '/' + animationType)
-            $scope.isLoading = true;
             ctrl.animationType = animationType;
             ctrl.viewType = "S";
             $timeout(function () {
@@ -586,14 +577,11 @@
                         //calcuatePerFormanceAvg();
                         ctrl.initialLoad = false;
                         $scope.isLoading = false;
-
                     } else {
                         getTargetGunPositions();
                     }
                 }
             })(eventAssetId, shotNo, round, hit));
-            //}
-            //}
         }
 
         function buildAnalysisView() {
@@ -687,7 +675,6 @@
             if (roundData == undefined) {
                 return;
             }
-            $scope.isLoading = true;
             ctrl.selectedStation = stationNo;
             ctrl.stations = [1, 2, 3, 4, 5, "All"];
 
@@ -718,21 +705,14 @@
 
 
         }
-        /* function selectAnalysis(analysisType){
-         $scope.isLoading = true;
-         ctrl.analysisType = analysisType;
-         filterShots();
-         }*/
         function selectShot(shotType)
         {
-            $scope.isLoading = true;
             ctrl.shotType = shotType;
             filterShots();
             //selectStation(ctrl.selectedStation);
         }
 
         function selectAngle(angleType) {
-            $scope.isLoading = true;
             ctrl.angleType = angleType;
             filterShots();
         }
@@ -804,7 +784,6 @@
         function plotAnalysisChart(plotData) {
             buildTitle();
             console.log(JSON.stringify(plotData));
-            $scope.isLoading = false;
             var plotInfo = {};
             plotInfo.WIDTH = 650;
             plotInfo.HEIGHT = 450;
@@ -838,7 +817,6 @@
             if (eventAssetIds == "") {
                 drawVelocityChart(plotData, plotInfo);
             } else {
-                $scope.isLoading = true;
                 eventAssetIds = eventAssetIds.substr(0, eventAssetIds.length - 1);
                 //EventService.GetSwingPathData(eventAssetIds).then(function (velocityData) {
                 EventService.GetSwingVelocityData(eventAssetIds).then(function (velocityData) {
@@ -860,7 +838,6 @@
                         }
                     }
                     drawVelocityChart(plotData, plotInfo);
-                    $scope.isLoading = false;
                 });
             }
         }
@@ -892,7 +869,6 @@
                 }
                 drawSwingPathChart(plotData, plotInfo);
             } else {
-                $scope.isLoading = true;
                 eventAssetIds = eventAssetIds.substr(0, eventAssetIds.length - 1);
                 EventService.GetSwingPathData(eventAssetIds).then(function (pathData) {
                     var data = pathData.results;
@@ -914,7 +890,6 @@
                         }
                     }
                     drawSwingPathChart(plotData, plotInfo);
-                    $scope.isLoading = false;
                 });
             }
         }
@@ -943,7 +918,7 @@
         
         //Coach
         function goToTeamMgmt() {
-            $location.path("/teamManagement/"+ctrl.teamId)
+            $location.path("/teamManagement/"+ctrl.currentTeam.id)
         }
 
         //DatePicker code...Should move to separate file and use it from that controller..

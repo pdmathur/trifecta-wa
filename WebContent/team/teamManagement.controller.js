@@ -176,7 +176,7 @@
                         return TeamMgmtService;
                     },
                     teams: function () {
-                        return TeamCtrl.teamsList;
+                        return TeamCtrl.teamsList.slice(1,TeamCtrl.teamsList.length);
                     }
                 }
             });
