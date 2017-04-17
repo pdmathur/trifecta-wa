@@ -71,6 +71,11 @@
                     templateUrl: 'team/teamManagement.view.html',
                     controllerAs: 'TeamCtrl'
                 })
+                .when('/teamManagement/:teamId', {
+                    controller: 'TeamController',
+                    templateUrl: 'team/teamManagement.view.html',
+                    controllerAs: 'TeamCtrl'
+                })
                 .when('/summary/:viewType', {
                     templateUrl: 'summary/summary.view.html',
                     controller: 'SummaryController',
@@ -78,6 +83,12 @@
 
                 })
                 .when('/summary/:viewType/:teamId/:stDate/:endDate', {
+                    templateUrl: 'summary/summary.view.html',
+                    controller: 'SummaryController',
+                    controllerAs: 'SummaryCtrl'
+
+                })
+                .when('/summary/:viewType/:teamId', {
                     templateUrl: 'summary/summary.view.html',
                     controller: 'SummaryController',
                     controllerAs: 'SummaryCtrl'

@@ -5,8 +5,8 @@
             .module('app')
             .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$location', '$cookieStore', '$uibModal', '$filter', 'filterFilter', 'TeamMgmtService'];
-    function TeamController($scope, $location, $cookieStore, $uibModal, $filter, filterFilter, TeamMgmtService) {
+    TeamController.$inject = ['$scope', '$location', '$routeParams', '$cookieStore', '$uibModal', '$filter', 'filterFilter', 'TeamMgmtService'];
+    function TeamController($scope, $location, $routeParams, $cookieStore, $uibModal, $filter, filterFilter, TeamMgmtService) {
         var TeamCtrl = this;
 
         TeamCtrl.dateRangeTitles = ["Current Week", "Last 4 Weeks", "Custom Range"];
@@ -88,18 +88,15 @@
             }
 
             if (TeamCtrl.isCustomRange) {
-            	var fromDate = "";
-                if (TeamCtrl.fromDate === undefined)
-                	fromDate = $filter('date')($scope.dateOptions1.minDate, 'yyyy-MM-dd');
-                else
+                if (TeamCtrl.fromDate == null || TeamCtrl.toDate == null)
+                	$location.path('/summary/COACH_SUMMARY/'+TeamCtrl.currentTeam.id);
+                else {
+                	var fromDate = "";
+                    var toDate = "";
                 	fromDate = $filter('date')(new Date(TeamCtrl.fromDate), 'yyyy-MM-dd');
-
-                var toDate = "";
-                if (TeamCtrl.toDate === undefined)
-                	toDate = $filter('date')($scope.dateOptions2.maxDate, 'yyyy-MM-dd');
-                else
                 	toDate = $filter('date')(new Date(TeamCtrl.toDate), 'yyyy-MM-dd');
-                $location.path('/summary/COACH_SUMMARY/'+TeamCtrl.currentTeam.id+"/" + fromDate + "/" + toDate);
+                	$location.path('/summary/COACH_SUMMARY/'+TeamCtrl.currentTeam.id+"/" + fromDate + "/" + toDate);
+                }
             } else if (selectedDates.length > 0) {
                 var toDate = $filter('date')(new Date(selectedDates[0].toDate), 'yyyy-MM-dd');
                 var fromDate = $filter('date')(new Date(selectedDates[0].fromDate), 'yyyy-MM-dd');
@@ -113,10 +110,16 @@
             TeamMgmtService.GetTeams(function (response) {
                 console.log(response);
                 TeamCtrl.teamsList = response.teams;
-                if (TeamCtrl.teamsList.length > 0) {
+                var t = {};
+                t.id = -1;
+                t.name = "All Teams";
+                TeamCtrl.teamsList.unshift(t);
+                
+                if ($routeParams.teamId != undefined) {
+                	TeamCtrl.currentTeam = filterFilter(TeamCtrl.teamsList, {id: $routeParams.teamId})[0];
+                } else
                     TeamCtrl.currentTeam = TeamCtrl.teamsList[0];
-                    getPlayers();
-                }
+                getPlayers();
             });
         }
 

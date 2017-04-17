@@ -943,7 +943,7 @@
         
         //Coach
         function goToTeamMgmt() {
-            $location.path("/teamManagement")
+            $location.path("/teamManagement/"+ctrl.teamId)
         }
 
         //DatePicker code...Should move to separate file and use it from that controller..
@@ -1015,8 +1015,8 @@
             	ctrl.stDate = new Date(curr.setDate(curr.getDate() - curr.getDay() - 21));
             	ctrl.endDate = new Date(curr.setDate(curr.getDate() + 27));
             } else if (title === "Custom Range") {
-            	ctrl.stDate = new Date($cookieStore.get('fromDate'));
-            	ctrl.endDate = new Date($cookieStore.get('toDate'));
+            	ctrl.stDate = ($cookieStore.get('fromDate') != null)? new Date($cookieStore.get('fromDate')) : null;
+            	ctrl.endDate = ($cookieStore.get('toDate') != null)? new Date($cookieStore.get('toDate')) : null;
             }
         }
 
