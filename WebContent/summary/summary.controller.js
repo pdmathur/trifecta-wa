@@ -251,6 +251,8 @@
                 //Had to do this because an & sl was not returning thumbnails..so fetching everything :(
                 EventService.GetEventAssets(ctrl.eventId, 'summary').then(function (eventAssets) {
                     ctrl.summaryView = eventAssets.results;
+                    if (ctrl.summaryView.length === undefined)
+                    	ctrl.summaryView = [];
                     console.log("event Assets===>" + ctrl.summaryView.length);
                     ctrl.totalShotCnt = 0;
                     for (var j = 1; j < ctrl.summaryView.length; j++) {
@@ -269,6 +271,8 @@
             //remove this if we get the assetImage from API later
             EventService.GetEventAssets(ctrl.eventId, 'stpov').then(function (eventAssets) {
                 ctrl.stPov = eventAssets.results;
+                if (ctrl.stPov.length === undefined)
+                	ctrl.stPov = [];
                 console.log(ctrl.stPov.length);
                 fillAssetsArray();
 
@@ -276,6 +280,8 @@
 
             EventService.GetEventAssets(ctrl.eventId, 'gnpov').then(function (eventAssets) {
                 ctrl.gnPov = eventAssets.results;
+                if (ctrl.gnPov.length === undefined)
+                	ctrl.gnPov = [];
                 console.log(ctrl.gnPov.length);
                 fillAssetsArray();
 
@@ -310,7 +316,7 @@
         function calculateScore() {
             var count = 0;
             for (var i = 0; i < ctrl.assetsArray.length; i++) {
-                if (ctrl.assetsArray[i].hit == 1) {
+                if (ctrl.assetsArray[i] !== undefined && ctrl.assetsArray[i].hit == 1) {
                     count++;
                 }
             }
@@ -539,6 +545,10 @@
             console.log("Round : " + round + " ==>" + shotNum);
 
             //  for (var i = 0; i < tmpAssets.length; i++) {
+            if (tmpAssets[shotNum] === undefined) { 
+                ctrl.initialLoad = false; // abort
+                $scope.isLoading = false;
+            }
             var eventAssetId = tmpAssets[shotNum].id;
             var shotNo = tmpAssets[shotNum].shot;
             var hit = tmpAssets[shotNum].hit;
