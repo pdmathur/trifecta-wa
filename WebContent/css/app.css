@@ -300,7 +300,7 @@ body {
 @media all and (device-width: 768px) and (device-height: 1024px) and
 (orientation:landscape) {
     .fsImg {
-        height: 768px;
+        height: 678px;
     }
     .pageSummtableDiv {
         cursor: pointer;
