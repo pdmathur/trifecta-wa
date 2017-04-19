@@ -130,20 +130,24 @@
             });
 
         }
-        function InvitePlayers(inviteModel, callback) {
-            inviteModel.nickName = "";
+        function InvitePlayers(inviteModel, callback) { // must ensure arrays match
             var emails = inviteModel.email.split(",");
+            var nickNames = inviteModel.nickName.split(",");
             for (var i = 0; i < emails.length; i++) {
                 var id = emails[i];
+                var nn = nickNames[i];
                 if (id === "" || id === undefined) {
                     continue;
+                }
+                if (nn === undefined || nn === "") {
+                	nn = id.split('@')[0];  // use username as nickname
                 }
                 $http({
                     method: 'POST',
                     url: host + '/japi',
                     timeout: 10000,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    data: "a=invitePlayer&tid=" + inviteModel.teamId + "&email=" + id + "&nn=" + inviteModel.nickName + "&at=" + $rootScope.globals.currentUser.authToken
+                    data: "a=invitePlayer&tid=" + inviteModel.teamId + "&email=" + id + "&nn=" + nn + "&at=" + $rootScope.globals.currentUser.authToken
                 }).success(function (data) {
                     console.log(JSON.stringify(data))
                     var retValue = {};

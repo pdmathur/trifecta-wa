@@ -5,8 +5,8 @@
             .module('app')
             .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$location', '$routeParams', '$cookieStore', '$uibModal', '$filter', 'filterFilter', 'TeamMgmtService'];
-    function TeamController($scope, $location, $routeParams, $cookieStore, $uibModal, $filter, filterFilter, TeamMgmtService) {
+    TeamController.$inject = ['$scope', '$location', '$routeParams', '$cookieStore', '$uibModal', '$filter', '$timeout', 'filterFilter', 'TeamMgmtService'];
+    function TeamController($scope, $location, $routeParams, $cookieStore, $uibModal, $filter, $timeout, filterFilter, TeamMgmtService) {
         var TeamCtrl = this;
 
         TeamCtrl.dateRangeTitles = ["Current Week", "Last 4 Weeks", "Custom Range"];
@@ -183,6 +183,7 @@
 
             modalInstance.result.then(function (selectedItem) {
                 //$scope.selected = selectedItem;
+            	$timeout(getPlayers, 2000);  // Allow time to refresh TODO 
             }, function () {
                 //$log.info('Modal dismissed at: ' + new Date());
             });
