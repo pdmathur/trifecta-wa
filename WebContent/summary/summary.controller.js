@@ -201,6 +201,7 @@
                         selectEvent(ctrl.coachSummData[0].eventId);
                     }
                 } else {
+                	$scope.isLoading = false; // stop progress here
                     console.log("No data GetCoachSummary");
                 }
             });
@@ -251,7 +252,7 @@
                 //Had to do this because an & sl was not returning thumbnails..so fetching everything :(
                 EventService.GetEventAssets(ctrl.eventId, 'summary').then(function (eventAssets) {
                     ctrl.summaryView = eventAssets.results;
-                    if (ctrl.summaryView.length === undefined)
+                    if (ctrl.summaryView === undefined)
                     	ctrl.summaryView = [];
                     console.log("event Assets===>" + ctrl.summaryView.length);
                     ctrl.totalShotCnt = 0;
@@ -271,7 +272,7 @@
             //remove this if we get the assetImage from API later
             EventService.GetEventAssets(ctrl.eventId, 'stpov').then(function (eventAssets) {
                 ctrl.stPov = eventAssets.results;
-                if (ctrl.stPov.length === undefined)
+                if (ctrl.stPov === undefined)
                 	ctrl.stPov = [];
                 console.log(ctrl.stPov.length);
                 fillAssetsArray();
@@ -280,7 +281,7 @@
 
             EventService.GetEventAssets(ctrl.eventId, 'gnpov').then(function (eventAssets) {
                 ctrl.gnPov = eventAssets.results;
-                if (ctrl.gnPov.length === undefined)
+                if (ctrl.gnPov === undefined)
                 	ctrl.gnPov = [];
                 console.log(ctrl.gnPov.length);
                 fillAssetsArray();
