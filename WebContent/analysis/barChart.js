@@ -26,18 +26,6 @@ function drawVelocityChart(shotAnalysisData, plotInfo) {
                 }
             }
         }
-        if (plotInfo == undefined) {
-            plotInfo = {};
-            plotInfo.WIDTH = 650;
-            plotInfo.HEIGHT = 450;
-            plotInfo.M_TOP = 50;
-            plotInfo.M_BOTTOM = 50;
-            plotInfo.M_LEFT = 50;
-            plotInfo.M_RIGHT = 20;
-            plotInfo.id = "#visualisation";
-            plotInfo.legend = true;
-            plotInfo.axis = true;
-        }
         drawChart(plotData, plotInfo);
     } catch (err) {
         console.log("Exception===>" + err.message);
@@ -77,19 +65,6 @@ function drawSwingPathChart(shotAnalysisData, plotInfo) {
                 }
             }
             //break;
-        }
-
-        if (plotInfo == undefined) {
-            plotInfo = {};
-            plotInfo.WIDTH = 850; // 650
-            plotInfo.HEIGHT = 650; // 450
-            plotInfo.M_TOP = 50;
-            plotInfo.M_BOTTOM = 50;
-            plotInfo.M_LEFT = 50;
-            plotInfo.M_RIGHT = 20;
-            plotInfo.id = "#visualisation";
-            plotInfo.legend = true;
-            plotInfo.axis = true;
         }
         drawChart2(plotData, plotInfo);
     } catch (err) {
@@ -521,7 +496,7 @@ function animatelines(whichline) {
         // Then highlight the main line to be fully visable and give it a thicker stroke
         for (var j = lineNo; j < (lineNo + 2); j++) {
             d3.select("#line_" + j).style("opacity", "1").style("stroke-width", 4);
-            // First work our the total length of the line 
+            /*// First work our the total length of the line 
             var totalLength = d3.select("#line_" + j).node().getTotalLength();
 
             d3.selectAll("#line_" + j)
@@ -534,6 +509,7 @@ function animatelines(whichline) {
                     .duration(1000)
                     .ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
                     .attr("stroke-dashoffset", 0);
+            */
         }
 
 
@@ -605,18 +581,6 @@ function drawMoneyShotChart(shotAnalysisData, plotInfo) {
             //plotData.push(targetPos);
 
         }
-        if (plotInfo == undefined) {
-            plotInfo = {};
-            plotInfo.WIDTH = 650;
-            plotInfo.HEIGHT = 450;
-            plotInfo.M_TOP = 50;
-            plotInfo.M_BOTTOM = 50;
-            plotInfo.M_LEFT = 50;
-            plotInfo.M_RIGHT = 20;
-            plotInfo.id = "#visualisation";
-            plotInfo.legend = true;
-            plotInfo.axis = true;
-        }
         drawChart3(plotData, plotInfo);
         console.log("plotData===>" + JSON.stringify(plotData));
     } catch (err) {
@@ -648,18 +612,19 @@ function drawChart3(data, plotInfo) {
     var maxY = d3.max(data, function (d) {return d.y;});
 
     // Give at least one radius worth of margin around each side
+    var marginFactor = 1.4; // > 1
     plotInfo.radius = parseInt(plotInfo.radius);
-    if (+plotInfo.x - 2*plotInfo.radius < minX) {
-        minX = plotInfo.x - 2*plotInfo.radius;
+    if (+plotInfo.x - marginFactor*plotInfo.radius < minX) {
+        minX = plotInfo.x - marginFactor*plotInfo.radius;
     }
-    if (+plotInfo.x + 2*plotInfo.radius > maxX) {
-        maxX = +plotInfo.x + 2*parseInt(plotInfo.radius);
+    if (+plotInfo.x + marginFactor*plotInfo.radius > maxX) {
+        maxX = +plotInfo.x + marginFactor*parseInt(plotInfo.radius);
     }
-    if (+plotInfo.y - 2*plotInfo.radius < minY) {
-        minY = +plotInfo.y - 2*plotInfo.radius;
+    if (+plotInfo.y - marginFactor*plotInfo.radius < minY) {
+        minY = +plotInfo.y - marginFactor*plotInfo.radius;
     }
-    if (+plotInfo.y + 2*plotInfo.radius > maxY) {
-        maxY = +plotInfo.y + 2*plotInfo.radius;
+    if (+plotInfo.y + marginFactor*plotInfo.radius > maxY) {
+        maxY = +plotInfo.y + marginFactor*plotInfo.radius;
     }
     
     // We need to plot these points on a 1:1 scale.

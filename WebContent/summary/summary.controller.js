@@ -796,8 +796,8 @@
             buildTitle();
             console.log(JSON.stringify(plotData));
             var plotInfo = {};
-            plotInfo.WIDTH = 650;
-            plotInfo.HEIGHT = 450;
+            plotInfo.WIDTH = 800;
+            plotInfo.HEIGHT = 505;
             plotInfo.M_TOP = 50;
             plotInfo.M_BOTTOM = 50;
             plotInfo.M_LEFT = 50;
