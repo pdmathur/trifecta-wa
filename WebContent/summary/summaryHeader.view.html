@@ -68,6 +68,12 @@
                                         </div>
                                    
                                 </th>
+                                <th>
+                                	<div ng-if="globals.currentUser.isOwner">
+                            			<button type="button" class="btn btn-default" style="margin-left: 15px;padding: 2px 4px 2px 4px;"><i  ng-click="SummaryCtrl.deleteEvent()" class="glyphicon glyphicon-trash"
+                           				confirm="Are you sure?" confirm-title="Delete Selected Event" confirm-settings="{size: 'sm'}" confirm-ok="Yes" confirm-cancel="No"></i></button>
+                           			</div>
+                                </th>
                             </tr>
                         </tbody></table>
                 </div>

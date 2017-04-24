@@ -29,7 +29,7 @@
             var response;
             //$http.get(host+'/api', {params: { "a":"auth","un" : username,"pw" : password }})
             $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
                 timeout: 10000,
                 params: {"a": "auth", "un": username, "pw": password}, // Query Parameters (GET)
@@ -146,7 +146,7 @@
             var response;
             //$http.get(host+'/api', {params: { "a":"auth","un" : username,"pw" : password }})
             $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
                 timeout: 10000,
                 params: {"a": "reauth", "at": $rootScope.globals.currentUser.authToken},
@@ -180,7 +180,7 @@
             ClearCredentials();
             //$http.get(host+'/api', {params: { "a":"auth","un" : username,"pw" : password }})
             $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
                 timeout: 10000,
                 params: {"a": "deauth", "at": token},

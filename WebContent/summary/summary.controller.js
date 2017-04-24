@@ -61,6 +61,7 @@
         ctrl.reloadCoachSummary = reloadCoachSummary;
         ctrl.selectTeam = selectTeam;
         ctrl.selectEvent = selectEvent;
+        ctrl.deleteEvent = deleteEvent;
         ctrl.selectUserId = -1;
 
         ctrl.selectStation = selectStation;
@@ -238,6 +239,13 @@
             ctrl.runningCnt = 0;
 
             getEventAssets();
+        }
+        function deleteEvent() {
+        	if (ctrl.eventId != null) {
+                EventService.DeleteEvent(ctrl.eventId, function (retData) {
+                	reloadCoachSummary();
+                });
+        	}
         }
         function getEventAssets() {
             /* if (ctrl.animationType === undefined) {

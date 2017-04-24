@@ -23,13 +23,14 @@
         service.GetPerformanceSummary = GetPerformanceSummary;
         service.GetCoachSummary = GetCoachSummary;
         service.GetCoachSummaryAvg = GetCoachSummaryAvg;
+        service.DeleteEvent = DeleteEvent;
         return service;
 
         function GetEvents() {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "lse", "max": -1, "at": $rootScope.globals.currentUser.authToken}, // Query Parameters (GET)
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -40,9 +41,9 @@
         }
         function GetEventDetails(eventId) {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "ged", "eid": eventId, "at": $rootScope.globals.currentUser.authToken}, // Query Parameters (GET)
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -86,9 +87,9 @@
 
             }
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "gea", "eid": eventId, "t": assetRequestType, "at": $rootScope.globals.currentUser.authToken}, // Query Parameters (GET)
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -99,9 +100,9 @@
         }
         function GetEventSummaryVideoAssets(eventId) {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "gea2", "eid": eventId, "at": $rootScope.globals.currentUser.authToken}, // Query Parameters (GET)
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -112,9 +113,9 @@
         }
         function GetTargetNGunPositions(eventShotId, eventDet) {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "gesgtp", "esid": eventShotId, "at": $rootScope.globals.currentUser.authToken}, // Query Parameters (GET)
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -313,9 +314,9 @@
         }
         function GetSwingPathData(eventAssetIds) {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "gsp", "esid": eventAssetIds, "at": $rootScope.globals.currentUser.authToken}, // Query Parameters (GET)
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -365,9 +366,9 @@
         }
         function GetSwingVelocityData(eventAssetIds) {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "gss", "esid": eventAssetIds, "at": $rootScope.globals.currentUser.authToken}, // Query Parameters (GET)
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -417,9 +418,9 @@
 
         function GetEventVideos(eventId) {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "gea2", "eid": eventId, "at": $rootScope.globals.currentUser.authToken},
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -455,9 +456,9 @@
 
         function GetPerformanceSummaryAvg(eventId, altId) {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "gpsa", "eid": eventId, "altid": altId, "at": $rootScope.globals.currentUser.authToken},
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -521,9 +522,9 @@
 
         function GetPerformanceSummary(eventId, altId) {
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: host + '/api',
-                timeout: 10000,
+                timeout: 60000,
                 params: {"a": "gpsd", "eid": eventId, "altid": altId, "at": $rootScope.globals.currentUser.authToken},
                 transformResponse: function (data, headersGetter, status) {
                     if (status != 401) {
@@ -668,7 +669,7 @@
             $http({
                 method: 'POST',
                 url: host + '/japi',
-                timeout: 10000,
+                timeout: 60000,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: "a=gpsatd&tid=" + teamId + "&startdate=" + fromDate + "&enddate=" + toDate + "&at=" + $rootScope.globals.currentUser.authToken
             }).success(function (data) {
@@ -731,6 +732,27 @@
                 return {success: false, message: error};
             };
         }
+        
+        function DeleteEvent(evId, callback) {
+            $http({
+                method: 'POST',
+                url: host + '/japi',
+                timeout: 60000,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: "a=rme&eid=" + evId + "&at=" + $rootScope.globals.currentUser.authToken
+            }).success(function (data) {
+                console.log(JSON.stringify(data))
+                var retValue = {};
+                retValue.success = false;
+                if (data.status.success) {
+
+                    retValue.success = true;
+                }
+                callback(retValue);
+            });
+
+        }
+
 
     }
 
