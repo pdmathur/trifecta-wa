@@ -9,7 +9,7 @@
                         Events</a>
                     </li>--> <a href="#menu-toggle" id="menu-toggle"><span
                             class="glyphicon glyphicon-align-justify"
-                            ></span></a></th>
+                            ></span></a></span></th>
             <th style="text-align: center; vertical-align: middle;">
                 <div ng-if="SummaryCtrl.viewType === 'RS'" class="pageTitle">
                     Trifecta Shot <sup>TM</sup> 1 - Page Performance Summary
@@ -32,8 +32,9 @@
                                                 <li ng-repeat="t in SummaryCtrl.coachTeams"><a ng-click="SummaryCtrl.selectTeam(t)">{{t.name}}</a></li>
                                             </ul>
                                         </div>
-                                    </th>
-                                    <th style="text-align: right; margin-top: 20px;width:70%;">
+                                    </div>
+                                  </th>
+                                  <th style="text-align: right; margin-top: 20px;width:70%;">
 
                                         <div>
                                             <div class="col-xs-1" style="margin-right: 10px;vertical-align: top;">

@@ -102,17 +102,7 @@
         }
 
         function getTemplate() {
-            if (ctrl.viewType == "STOA") {
-                ctrl.title = "Analysis : Station Overview";
-                ctrl.templateURL = "summary/stationAnalysisOverview.html";
-                ctrl.viewConfig.cols = [1, 2, 3];
-                ctrl.viewConfig.rows = [1, 2, 3, 4, 5];
-            } else if (ctrl.viewType == "FPOA") {
-                ctrl.title = "Analysis : Flight Path Overview";
-                ctrl.templateURL = "summary/flightPathAnalysisOverview.html";
-                ctrl.viewConfig.cols = [1, 2, 3];
-                ctrl.viewConfig.rows = ["L/R", "Ctr", "R/L"];
-            } else if (ctrl.viewType == "RS") {
+        	if (ctrl.viewType == "RS") {
                 ctrl.templateURL = "summary/performanceSummary.html";
                 getPerformanceSummaryData();
             } else if (ctrl.viewType == "SWG" || ctrl.viewType == "VEL" || ctrl.viewType == "MONEY") {
@@ -145,6 +135,8 @@
                 if(ctrl.perfData.length >0 ){
                     selectEvent(ctrl.perfData[0].eventId);
                 }
+                else
+                	$scope.isLoading = false;
             });
 
         }
@@ -345,7 +337,10 @@
                 //to give the user an effect that something has loaded ;)
                 fillAssetsArray();
                 ctrl.beginShot = 0;
-                ctrl.endShot = ctrl.assetsArray.length;
+                if (ctrl.assetsArray == undefined)
+                	ctrl.endShot = 0;
+                else
+                	ctrl.endShot = ctrl.assetsArray.length;
             }, 500);
 
             hideExpandedMenu();
@@ -355,7 +350,10 @@
         // Summary, this is the entry point of the function.
         function loadAnalysis(analysisType) {
             ctrl.beginShot = 0;
-            ctrl.endShot = ctrl.assetsArray.length;
+            if (ctrl.assetsArray == undefined)
+            	ctrl.endShot = 0;
+            else
+            	ctrl.endShot = ctrl.assetsArray.length;
             if (analysisType == "STOA" || analysisType == "FPOA") {
                 ctrl.viewType = analysisType;
                 ctrl.animationType = "";

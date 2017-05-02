@@ -41,11 +41,6 @@
        // delete $httpProvider.defaults.headers.common['X-Requested-With'];
        $httpProvider.interceptors.push('sessionRecoverer');
         $routeProvider
-//                .when('/', {
-//                    controller: 'HomeController',
-//                    templateUrl: 'home/home.view.html',
-//                    controllerAs: 'HomeCtrl'
-//                })
                 .when('/', {
                     controller: 'LoginController',
                     templateUrl: 'login/login.view.html',
@@ -94,36 +89,12 @@
                     controllerAs: 'SummaryCtrl'
 
                 })
-//                .when('/summary/:eventId', {
-//                    templateUrl: 'summary/summary.view.html',
-//                    controller: 'SummaryController',
-//                    controllerAs: 'SummaryCtrl'
-//
-//                })
-//                .when('/analysis/:eventId/:analysisType/:roundNo', {
-//                    templateUrl: 'analysis/analysis.view.html',
-//                    controller: 'AnalysisController',
-//                    controllerAs: 'AnalysisCtrl'
-
-//                })
                 .when('/video', {
                     templateUrl: 'summary/video.view.html',
                     controller: 'VideoController',
                     controllerAs: 'VideoCtrl'
 
                 })
-                /*.when('/summary/:eventId/:roundNo', {
-                 templateUrl: 'summary/summary.view.html',
-                 controller: 'SummaryController',
-                 controllerAs: 'SummaryCtrl'
-                 
-                 })
-                 .when('/animationSummary/:eventId/:animationType', {
-                 templateUrl: 'summary/summary.view.html',
-                 controller: 'SummaryController',
-                 controllerAs: 'SummaryCtrl'
-                 
-                 })*/
                 .when('/register', {
                     controller: 'RegisterController',
                     templateUrl: 'register/register.view.html',
