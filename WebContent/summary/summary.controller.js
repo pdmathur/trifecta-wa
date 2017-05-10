@@ -954,7 +954,7 @@
         	else
         		ctrl.endDate = null;
 
-        	if (fromDate == null || toDate == null)
+        	if (fromDate == "" || toDate == "")
         		$location.path("/report/"+ctrl.currentTeam.id);
         	else
         		$location.path("/report/"+ctrl.currentTeam.id+"/"+fromDate+"/"+toDate);
