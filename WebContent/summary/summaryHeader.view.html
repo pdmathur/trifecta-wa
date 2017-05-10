@@ -22,7 +22,7 @@
                     <table class="table table-borderless table-condensed" style="margin-bottom: 0px;width:100%;">
                         <tbody>
                             <tr style="text-align: center;">
-                                <th style="text-align: left; width:30%;">
+                                <th style="text-align: left; width:20%;">
                                     <div style="display:inline;margin: 0 auto;">
                                         <div class="btn-group" style="display: inline-block;float: left;margin-left: 25px;">
                                             <button class="btn btn-primary btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,7 +34,7 @@
                                         </div>
                                     </div>
                                   </th>
-                                  <th style="text-align: right; margin-top: 20px;width:70%;">
+                                  <th style="text-align: right; margin-top: 20px;width:60%;">
 
                                         <div>
                                             <div class="col-xs-1" style="margin-right: 10px;vertical-align: top;">
@@ -69,10 +69,11 @@
                                         </div>
                                    
                                 </th>
-                                <th>
+                                <th style="text-align: left; width:20%;">
                                 	<div ng-if="globals.currentUser.isOwner">
-                            			<button type="button" class="btn btn-default" style="margin-left: 15px;padding: 2px 4px 2px 4px;"><i  ng-click="SummaryCtrl.deleteEvent()" class="glyphicon glyphicon-trash"
+                            			<button type="button" class="btn btn-default" ><i  ng-click="SummaryCtrl.deleteEvent()" class="glyphicon glyphicon-trash"
                            				confirm="Are you sure?" confirm-title="Delete Selected Event" confirm-settings="{size: 'sm'}" confirm-ok="Yes" confirm-cancel="No"></i></button>
+                            			<button type="button" class="btn btn-default"><i  ng-click="SummaryCtrl.gotoReport()" class="glyphicon glyphicon-education"></i></button>
                            			</div>
                                 </th>
                             </tr>

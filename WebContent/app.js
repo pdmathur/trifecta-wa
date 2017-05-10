@@ -89,6 +89,21 @@
                     controllerAs: 'SummaryCtrl'
 
                 })
+                .when('/report', {
+                	templateUrl: 'report/report.view.html',
+                	controller: 'ReportController',
+                	controllerAs: 'ReportCtrl'
+                })
+                .when('/report/:teamId', {
+                	templateUrl: 'report/report.view.html',
+                	controller: 'ReportController',
+                	controllerAs: 'ReportCtrl'
+                })
+                .when('/report/:teamId/:stDate/:endDate', {
+                	templateUrl: 'report/report.view.html',
+                	controller: 'ReportController',
+                	controllerAs: 'ReportCtrl'
+                })
                 .when('/video', {
                     templateUrl: 'summary/video.view.html',
                     controller: 'VideoController',

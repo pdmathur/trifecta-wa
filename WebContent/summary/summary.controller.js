@@ -79,6 +79,7 @@
         ctrl.goToAnalysisFPAO = goToAnalysisFPAO;
         ctrl.goToAnalysisSTAO = goToAnalysisSTAO;
 
+        ctrl.gotoReport = gotoReport;
         ctrl.goToTeamMgmt = goToTeamMgmt;
         ctrl.buildDateRanges = buildDateRanges;
         ctrl.fullDate = fullDate;
@@ -93,9 +94,11 @@
             	ctrl.endDate = fullDate($routeParams.endDate);
             	
             ctrl.animationType = $rootScope.animationType;
-            getTemplate();
-//TODO on click of event
-            //  getEventAssets();
+        	try {
+                getTemplate();
+        	} catch (e) { // some error on first call.  Send back to login screen
+        		$location.path("/login");
+        	}
         }
         ctrl.getNumber = function (num) {
             return new Array(num);
@@ -191,7 +194,7 @@
                 if (response.success) {
                     ctrl.coachSummData = response.result; 
                     if (ctrl.coachSummData.length > 0) {
-                        selectEvent(ctrl.coachSummData[0].eventId);
+                        selectEvent(ctrl.coachSummData[0].eventId, ctrl.coachSummData[0].userId);
                     }
                 } else {
                 	$scope.isLoading = false; // stop progress here
@@ -938,6 +941,25 @@
             $location.path("/teamManagement/"+ctrl.currentTeam.id)
         }
 
+        //Report
+        function gotoReport() {
+        	var fromDate = "";
+        	var toDate = "";
+        	if (ctrl.stDate != undefined && !isNaN(ctrl.stDate.getTime()))
+        		fromDate = $filter('date')(new Date(ctrl.stDate), 'yyyy-MM-dd');
+        	else
+        		ctrl.stDate = null; // reset it
+        	if (ctrl.endDate != undefined && !isNaN(ctrl.endDate.getTime()))
+        		toDate = $filter('date')(new Date(ctrl.endDate), 'yyyy-MM-dd');
+        	else
+        		ctrl.endDate = null;
+
+        	if (fromDate == null || toDate == null)
+        		$location.path("/report/"+ctrl.currentTeam.id);
+        	else
+        		$location.path("/report/"+ctrl.currentTeam.id+"/"+fromDate+"/"+toDate);
+        }
+        
         //DatePicker code...Should move to separate file and use it from that controller..
         $scope.popup1 = {
         		opened: false
