@@ -437,3 +437,7 @@ video::-webkit-media-controls-start-playback-button {
   border-bottom-width: 0;
 }
 
+@media print {
+    h2.fresh-page {page-break-before: always;}
+    textarea.coach-comment {border:none;}
+}
