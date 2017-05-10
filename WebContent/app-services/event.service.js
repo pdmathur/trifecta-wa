@@ -410,7 +410,7 @@
                 }
                 ;
 
-                console.log("recordsArray===>" + recordsArray.length);
+                console.log("recordsArray===>" + Object.keys(recordsArray).length);
                 retValue.results = recordsArray;
             }
             return retValue;
@@ -448,7 +448,7 @@
                 }
                 ;
 
-                console.log("recordsArray===>" + recordsArray.length);
+                console.log("recordsArray===>" + Object.keys(recordsArray).length);
                 retValue.results = recordsArray;
             }
             return retValue;
