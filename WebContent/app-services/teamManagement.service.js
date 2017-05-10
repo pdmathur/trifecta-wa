@@ -76,12 +76,14 @@
                         var team = {};
                         team.name = data.status.rec.name;
                         team.id = data.status.rec.tid;
+                        team.coach = data.status.rec.coach;
                         teams.push(team)
                     } else {
                         for (var i = 0; i < data.status.rec.length; i++) {
                             var team = {};
                             team.name = data.status.rec[i].name;
                             team.id = data.status.rec[i].tid;
+                            team.coach = data.status.rec[i].coach;
                             teams.push(team)
                         }
                     }
