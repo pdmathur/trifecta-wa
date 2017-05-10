@@ -203,7 +203,7 @@ function drawChart2(data, plotInfo) {
 
     var pointWidth = 5;
     var radius = plotInfo.radius;
-    if (!plotInfo.legend) { // reduce these for smaller drawings so not to get too much ink
+    if (plotInfo.makeSmall !== undefined) { // reduce these for smaller drawings so not to get too much ink
         radius = 5;
         pointWidth = 3;
     }
@@ -285,7 +285,7 @@ function drawChart2(data, plotInfo) {
                 .attr('stroke-width', PLOT_LINE_WIDTH)
                 .attr("class", "line")
                 .style("stroke-dasharray", ("10, 10"))
-                .attr('id', 'line_' + i)
+                .attr('id', plotInfo.id.substr(1)+'line_' + i)
                 .attr("stroke-linecap", "round")
                 .attr('fill', 'none');
         if (legend[shotNo] == undefined && plotInfo.legend) {
@@ -296,13 +296,13 @@ function drawChart2(data, plotInfo) {
                     .style("cursor", "pointer")
                     .style("font-weight", "bold")
                     .attr("class", "legend")
-                    .attr('id', 'lShotNo_' + i)
+                    .attr('id', plotInfo.id.substr(1)+'lShotNo_' + i)
                     .on('click', function () {
                         var active = d.active ? false : true;
                         var opacity = active ? 0 : 1;
-                        d3.select("#line_" + i).style("opacity", opacity);
-                        d3.select("#line_" + (i + 1)).style("opacity", opacity);
-                        animatelines(i);
+                        d3.select(plotInfo.id+"line_" + i).style("opacity", opacity);
+                        d3.select(plotInfo.id+"line_" + (i + 1)).style("opacity", opacity);
+                        animatelines(i, plotInfo.id);
                         d.active = active;
                     })
                     .text(function () {
@@ -335,7 +335,7 @@ function drawChart2(data, plotInfo) {
             .attr("class", "legend")
             .on('click', function () {
 
-                animatelines(100);
+            	animatelines(100, plotInfo.id);
             })
             .text("Reset");
 
@@ -439,7 +439,7 @@ function drawChart(data, plotInfo) {
                 })
                 .attr('stroke-width', PLOT_LINE_WIDTH)
                 .attr("class", "line")
-                .attr('id', 'line_' + i)
+                .attr('id', plotInfo.id.substr(1)+'line_' + i)
                 .attr("stroke-linecap", "round")
                 .attr('fill', 'none');
         if (legend[shotNo] == undefined && plotInfo.legend) {
@@ -450,13 +450,13 @@ function drawChart(data, plotInfo) {
                     .style("cursor", "pointer")
                     .style("font-weight", "bold")
                     .attr("class", "legend")
-                    .attr('id', 'lShotNo_' + i)
+                    .attr('id', + plotInfo.id.substr(1)+'lShotNo_' + i)
                     .on('click', function () {
                         var active = d.active ? false : true;
                         var opacity = active ? 0 : 1;
-                        d3.select("#line_" + i).style("opacity", opacity);
-                        d3.select("#line_" + (i + 1)).style("opacity", opacity);
-                        animatelines(i);
+                        d3.select(plotInfo.id+"line_" + i).style("opacity", opacity);
+                        d3.select(plotInfo.id+"line_" + (i + 1)).style("opacity", opacity);
+                        animatelines(i, plotInfo.id);
                         d.active = active;
                     })
                     .text(function () {
@@ -478,13 +478,13 @@ function drawChart(data, plotInfo) {
             .attr("class", "legend")
             .on('click', function () {
 
-                animatelines(100);
+            	animatelines(100, plotInfo.id);
             })
             .text("Reset");
 
 }
 
-function animatelines(whichline) {
+function animatelines(whichline, id) {
     console.log("animate whichline==>" + whichline);
     // Look at what button was clicked
     if (whichline < 99) {
@@ -492,10 +492,10 @@ function animatelines(whichline) {
         // First set all the lines to be invisible
         d3.selectAll(".line").style("opacity", "0.4").style("stroke-width", PLOT_LINE_WIDTH);
         d3.selectAll(".legend").style("text-decoration","none");
-        d3.select("#lShotNo_"+lineNo).style("text-decoration","overline");
+        d3.select(id+"lShotNo_"+lineNo).style("text-decoration","overline");
         // Then highlight the main line to be fully visable and give it a thicker stroke
         for (var j = lineNo; j < (lineNo + 2); j++) {
-            d3.select("#line_" + j).style("opacity", "1").style("stroke-width", 4);
+            d3.select(id+"line_" + j).style("opacity", "1").style("stroke-width", 4);
             /*// First work our the total length of the line 
             var totalLength = d3.select("#line_" + j).node().getTotalLength();
 
@@ -523,8 +523,8 @@ function animatelines(whichline) {
         d3.selectAll(".line").each(function (d, i) {
 
             // Get the length of each line in turn
-            var totalLength = d3.select("#line_" + i).node().getTotalLength();
-            d3.selectAll("#line_" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
+            var totalLength = d3.select(plotInfo.id+"line_" + i).node().getTotalLength();
+            d3.selectAll(id+"line_" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
                     .attr("stroke-dashoffset", totalLength)
                     .transition()
                     .duration(1000)
@@ -745,7 +745,7 @@ function drawChart3(data, plotInfo) {
                 .attr('stroke', "#000000")
                 .attr('stroke-width', PLOT_LINE_WIDTH)
                 .attr("class", "line")
-                .attr('id', 'line_' + i)
+                .attr('id', plotInfo.id.substr(1)+'line_' + i)
                 .attr("stroke-linecap", "round")
                 .attr('fill', 'none')
                 .style('opacity', 0.2);
@@ -757,9 +757,9 @@ function drawChart3(data, plotInfo) {
                     .attr("ry", ((WIDTH - MARGINS.right - MARGINS.left) * (1) / (maxX - minX)))
                     .attr("stroke", "black")
                     .attr('stroke-width', 2)
-                    .attr('id', 'e_' + i + "_" + k)
+                    .attr('id', plotInfo.id.substr(1)+'e_' + i + "_" + k)
                     ;
-            var ecl = d3.select("#e_" + i + "_" + k);
+            var ecl = d3.select(plotInfo.id+"e_" + i + "_" + k);
             if (d.values[k].type == "T") {
                 if (d.values[k].hit == 1) {
                     ecl.style("fill", "lightgreen")
@@ -771,7 +771,7 @@ function drawChart3(data, plotInfo) {
                 ecl.style("stroke-dasharray", ("5, 5"))
                         .attr("stroke", "#AB9052")
                         .style("fill", "#ffffff");
-                if (plotInfo.legend) {
+                if (plotInfo.legend || plotInfo.showShotNum !== undefined) {
                     vis.append("text")
                             .attr("x", xScale(d.values[k].x) - 2)
                             .attr("y", yScale(d.values[k].y) + 2)
@@ -790,12 +790,12 @@ function drawChart3(data, plotInfo) {
                     .style("cursor", "pointer")
                     .style("font-weight", "bold")
                     .attr("class", "legend")
-                    .attr('id', 'lShotNo_' + i)
+                    .attr('id', plotInfo.id.substr(1)+'lShotNo_' + i)
                     .on('click', function () {
                         var active = d.active ? false : true;
                         var opacity = active ? 0 : 1;
-                        d3.select("#line_" + i).style("opacity", opacity);
-                        animateMoneylines(i);
+                        d3.select(plotInfo.id+"line_" + i).style("opacity", opacity);
+                        animateMoneylines(i, plotInfo.id);
                         d.active = active;
                     })
                     .text(function () {
@@ -821,25 +821,25 @@ function drawChart3(data, plotInfo) {
                 .attr("class", "legend")
                 .on('click', function () {
 
-                    animateMoneylines(100);
+                    animateMoneylines(100, plotInfo.id);
                 })
                 .text("Reset");
     }
 
 }
-function animateMoneylines(whichline) {
+function animateMoneylines(whichline, id) {
     console.log("animate whichline==>" + whichline);
     // Look at what button was clicked
     if (whichline < 99) {
         d3.selectAll(".line").style("opacity", "0.4").style("stroke-width", PLOT_LINE_WIDTH);
         d3.selectAll(".legend").style("text-decoration","none");;
-        d3.select("#line_" + whichline).style("opacity", "1").style("stroke-width", 2);
+        d3.select(id+"line_" + whichline).style("opacity", "1").style("stroke-width", 2);
         d3.selectAll(".legend").style("text-decoration","none");
-        d3.select("#lShotNo_"+whichline).style("text-decoration","overline");
+        d3.select(id+"lShotNo_"+whichline).style("text-decoration","overline");
 
-        var totalLength = d3.select("#line_" + whichline).node().getTotalLength();
+        var totalLength = d3.select(id+"line_" + whichline).node().getTotalLength();
 
-        d3.selectAll("#line_" + whichline)
+        d3.selectAll(id+"line_" + whichline)
                 // Set the line pattern to be an long line followed by an equally long gap
                 .attr("stroke-dasharray", totalLength + " " + totalLength)
                 // Set the intial starting position so that only the gap is shown by offesetting by the total length of the line
@@ -856,8 +856,8 @@ function animateMoneylines(whichline) {
         //Select All of the lines and process them one by one
         d3.selectAll(".line").each(function (d, i) {
             // Get the length of each line in turn
-            var totalLength = d3.select("#line_" + i).node().getTotalLength();
-            d3.selectAll("#line_" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
+            var totalLength = d3.select(plotInfo.id+"line_" + i).node().getTotalLength();
+            d3.selectAll(id+"line_" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
                     .attr("stroke-dashoffset", totalLength)
                     .transition()
                     .duration(1000)
