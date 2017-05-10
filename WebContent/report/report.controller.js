@@ -14,13 +14,16 @@
         ctrl.endDate = $routeParams.endDate || "";
         ctrl.teamId = $routeParams.teamId || -1;
         ctrl.gotoCoach = gotoCoach;
+        ctrl.commentsDone;
         
         initController();
-        $timeout(checkLoading, 500);
+        $timeout(checkLoading, 1500);
         
         function initController() {
         	console.log("Report init");
         	ctrl.threads = 0;
+        	$scope.isLoading = true; // force in the beginning 
+        	ctrl.commentsDone = false;
         	try {
         		getFullSummaryData();
         	} catch (e) { // some error on first call.  Send back to login screen
@@ -30,6 +33,11 @@
         
         function checkLoading() {
         	$scope.isLoading = (ctrl.threads == 0)? false : true;
+        	if (ctrl.threads == 0 && !ctrl.commentsDone)
+        	{
+        		updateComments();
+        		ctrl.commentsDone = true;
+        	}
         	$timeout(checkLoading, 500);
         }
         
@@ -302,6 +310,114 @@
                     drawMoneyShotChart(ps.eventAssets[1], plotInfo);
                 }
             });
+        }
+        
+        function updateComments()
+        {
+        	for (var i=0; i<ctrl.teamData.length; i++) {
+        		if (ctrl.teamData[i].ps) {
+        			for (var j=0; j<ctrl.teamData[i].ps.length; j++) {
+        				var player = ctrl.teamData[i].ps[j];
+        				var n =0;
+        				player.comments = [];
+        				
+        				var shotRate = player.totalHits / player.totalShots;
+    					var pctVar;
+    					if (shotRate > 0.85) {
+    						player.comments[n++] = "Your shot hit rate is excellent.";
+    						pctVar = 0.1;
+    					} else if (shotRate > 0.70) {
+    						player.comments[n++] = "Based on your shot hit rate, your skill level is intermediate.";
+    						pctVar = 0.15;
+    					} else if (shotRate > 0.50) {
+    						player.comments[n++] = "Based on your shot hit rate, your skill level is good.";
+    						pctVar = 0.25;
+    					} else {
+    						player.comments[n++] = "Based on your shot hit rate, you have a novice skill level.";
+    						pctVar = 0.25;
+    					}
+
+    					var list = [];
+    					// Comment on statistics by station
+    					for (var k=1; k<=5; k++ ) {
+    						if (shotRate > pctVar + player.stHits[k]/player.recs.length/5)
+    							list.push(k); 
+    					}
+    					if (list.length == 0)
+    						player.comments[n++] = "Your hit average from all stations is consistent.  Good job!";
+    					else if (list.length == 1)
+							player.comments[n++] = "Your hit average from station "+list[0]+" is lower than your average.  Keep an eye on the hold position when at this station.";
+    					else if (list.length > 1) {
+    						var s = "";
+    						for (var m=0; m<list.length - 1; m++)
+    							if (m == list.length - 2)
+    								s = s + list[m];
+    							else
+    								s = s + list[m] + ', ';
+    						s = " and " + list[list.length - 1];
+    						player.comments[n++] = "Your hit averages from stations "+s+" are lower than your average.  Keep an eye on the hold position when at these stations.";
+    					}
+
+    					list = [];
+    					// Comment on statistics by angle
+    					for (var k=0; k<3; k++ ) {
+    						if (shotRate > pctVar + player.angleHits[k]/player.angleShots[k]) {
+    							var s = 'from left to right';
+    							if (k==1)
+    								s = 'straight up';
+    							else if (k==2)
+    								s = 'from right to left';
+    							list.push(s);
+    						}
+    						
+    					}
+    					if (list.length == 0)
+    						player.comments[n++] = "Your hit average for the targets moving at all angles is consistent.  Good job!";
+    					else if (list.length == 1)
+							player.comments[n++] = "Your hit average for the targets moving "+list[0]+" needs attention.";
+    					else if (list.length > 1) {
+    						var s = "";
+    						for (var m=0; m<list.length - 1; m++)
+    							if (m == list.length - 2)
+    								s = s + list[m];
+    							else
+    								s = s + list[m] + ', ';
+    						s = " and " + list[list.length - 1];
+    						player.comments[n++] = "Your hit average for the targets moving "+s+" needs attention.";
+    					}
+    					
+    					if (shotRate > pctVar + player.aimHits[0]/player.aimShots)
+    						player.comments[n++] = "Your average hit rate exceeds the number of shots where the anticipated target location was in the center of the choke.  You may be compensating for a choke shape issue.";
+    					else if (shotRate < player.aimHits[0]/player.aimShots - pctVar)
+    						player.comments[n++] = "You missed shots that should have been centered around the anticipated target location.  There may be a choke issue."; 
+    					else {
+        					var nn = n;
+    						
+    						if (player.aimHits[1]/player.aimShots[0] < player.aimHits[2]/player.aimShots)
+    							player.comments[n++] = "You missed more shots because the aim point was too far to the right.";
+    						else if (player.aimHits[1]/player.aimShots[0] < player.aimHits[2]/player.aimShots)
+    							player.comments[n++] = "You missed more shots because the aim point was too far to the left.";
+
+    						if (player.aimHits[3]/player.aimShots < player.aimHits[4]/player.aimShots)
+    							player.comments[n++] = "You missed more shots because the aim point was too far behind the target.  Keep your gun pointing to where the target will be in the future.";
+    						else if (player.aimHits[1]/player.aimShots[0] < player.aimHits[2]/player.aimShots)
+    							player.comments[n++] = "You missed more shots because the aim point was too far ahead of the target.  You may be overcompensating for the target's motion.";
+
+    						if (player.aimHits[5]/player.aimShots < player.aimHits[6]/player.aimShots)
+    							player.comments[n++] = "You missed more shots because the aim point was lower than the target.  As you adjust for this, it is possible that you do not see the target when you pull the trigger, but that may be the correct position for the shot!";
+    						else if (player.aimHits[1]/player.aimShots < player.aimHits[2]/player.aimShots)
+    							player.comments[n++] = "You missed more shots because the aim point was higher than the target.  You may be overcompensating for how high you are holding the aim point when the target starts going down.";
+    						
+    						if (nn == n) {
+    							if (shotRate < 0.70)
+    								player.comments[n++] = "There is not a strong pattern in why you miss shots.  Work on anticipating where the target is moving and shoot there.";
+    							else
+    								player.comments[n++] = "There is not a strong pattern in why you miss shots.";
+        					}
+    					}
+        			}
+        		}
+        	}
         }
 
     }

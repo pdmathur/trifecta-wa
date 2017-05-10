@@ -119,8 +119,10 @@
 		</tbody>
 	</table>
 	
-	<h2>Feedback:</h2>
-	<ol><li>Swing left</li><li>Swing right</li></ol>
+	<div ng-if="ReportCtrl.commentsDone">
+		<h2>Feedback:</h2>
+		<ol><li ng-repeat="comment in ps.comments track by $index">{{comment}}</li></ol>
+	</div>
 	<textarea rows="2" cols="120" class="coach-comment"></textarea>
 	
 	<h2 class="fresh-page">Swing Path Analysis:</h2>
