@@ -35,7 +35,7 @@
         	$scope.isLoading = (ctrl.threads == 0)? false : true;
         	if (ctrl.threads == 0 && !ctrl.commentsDone)
         	{
-        		updateComments();
+        		updateComments2();
         		ctrl.commentsDone = true;
         	}
         	$timeout(checkLoading, 500);
@@ -420,5 +420,122 @@
         	}
         }
 
+        function updateComments2()
+        {
+        	for (var i=0; i<ctrl.teamData.length; i++) {
+        		if (ctrl.teamData[i].ps) {
+        			for (var j=0; j<ctrl.teamData[i].ps.length; j++) {
+        				var player = ctrl.teamData[i].ps[j];
+        				var n =0;
+        				player.comments = [];
+        				
+        				var shotRate = player.totalHits / player.totalShots;
+    					var pctVar;
+    					player.adjTotalHits = Math.round(25 / player.totalShots * player.totalHits * 10)/10;
+
+    					if (shotRate > 0.959) {
+    						player.comments[n++] = player.adjTotalHits+"/25 is an Excellent average.  Great consistency.";
+    						pctVar = 0.06;
+    					} else if (shotRate > 0.799) {
+    						player.comments[n++] =  "Your average is "+player.adjTotalHits+"/25 … Great job!  Let's look at areas to improve it further.";
+    						pctVar = 0.08;
+    					} else if (shotRate > 0.679) {
+    						player.comments[n++] =  "Your average is "+player.adjTotalHits+"/25 … Good job!   Let's see where we can add a few clays.";
+    						pctVar = 0.12;
+					} else if (shotRate > 0.5199) {
+    						player.comments[n++] =  "Your average is "+player.adjTotalHits+"/25  … Nice work.   Added focus on your aiming consistency  and swing style will add more to your average.";
+    						pctVar = 0.16;
+    					} else if (shotRate > 0.399) {
+    						player.comments[n++] =  "Your average is "+player.adjTotalHits+"/25  … Good work.   Focus on swing and aiming consistency  … You will be adding many more clays in no time.";
+    						pctVar = 0.20;
+
+   					} else {
+    						player.comments[n++] =  "Your average is "+player.adjTotalHits+"/25  … Good work.   Focus on swing and aiming consistency.";
+    						pctVar = 0.24;
+    					}
+
+    					var list = [];
+
+    					// Comment on statistics by STATION
+                        // >>>>> How do we adjust for 'partial rounds?    They will distort the average at these stations.
+          
+    					for (var k=1; k<=5; k++ ) {
+    						if (shotRate > pctVar + player.stHits[k]/player.recs.length/5)
+    							list.push(k); 
+    					}
+    					if (list.length == 0 && player.totalHits / player.totalShots > 0.959)
+    						player.comments[n++] =  "Great performance across all stations ... Great consistency!";
+    					else if (list.length == 0 && player.totalHits / player.totalShots<0.959)
+							player.comments[n++] =  "Your performance is balanced across all stations ... Good consistency!";
+    					else if (list.length == 1)
+							player.comments[n++] = "Your average from station "+list[0]+" is lower than your average.  Look at analysis below for guidance for this station.";
+    					else if (list.length > 1) {
+    						var s = "";
+    						for (var m=0; m<list.length - 1; m++)
+    							if (m == list.length - 2)
+    								s = s + list[m];
+    							else
+    								s = s + list[m] + ', ';
+    						s = s + " and " + list[list.length - 1];
+    						player.comments[n++] =  "Your averages for stations "+s+" are lower than your average.  Look at analysis below for guidance to improve these stations.";
+    					}
+
+    					list = [];
+
+    					// Comment on statistics by FLIGHT DIRECTION
+    					for (var k=0; k<3; k++ ) {
+    						if (shotRate > pctVar + player.angleHits[k]/player.angleShots[k]) {
+    							var s = 'Left to Right (L/R)';
+    							if (k==1)
+    								s = 'Center (C)';
+    							else if (k==2)
+    								s = 'Right to Left (R/L)';
+    							list.push(s);
+    						}
+    						
+    					}
+    					if (list.length == 0 && player.totalHits / player.totalShots > 0.959)
+    						player.comments[n++] =  "Great performance for all flight directions ... Great job!";
+    					else if (list.length == 0 && player.totalHits / player.totalShots < 0.959)
+    						player.comments[n++] =   "You are performance is consistent across all angles.  Good job!";
+    					else if (list.length == 1)
+							player.comments[n++] = "Focus on "+list[0]+" clays.  Your average for these flight directions is lower than your overall.  Look below for improvement suggestions.";
+    					else if (list.length > 1) {
+    						var s = "";
+    						for (var m=0; m<list.length - 1; m++)
+    							if (m == list.length - 2)
+    								s = s + list[m];
+    							else
+    								s = s + list[m] + ', ';
+    						s = s + " and " + list[list.length - 1];
+    						player.comments[n++] = "Your average for the targets moving "+s+" is lower than overall average ... Focus on these clays";
+    					}
+    					
+    					if (shotRate > pctVar + player.aimHits[0]/player.aimShots)
+    						player.comments[n++] = "Your 'On' % is lower than desired ... Focus on improving your aim consistency. Also, check for lead (ahead/behind) issues.";
+    					else if (shotRate < player.aimHits[0]/player.aimShots - pctVar)
+    						player.comments[n++] = "There are missed targets in the 'On' region (e.g. you were on target, but clay didn't break)... Choke may be too open.";
+    					else {
+        					var nn = n;
+    						
+    						if (player.aimHits[1]/player.aimShots[0] < player.aimHits[2]/player.aimShots)
+    							player.comments[n++] = "Your aim point is Right too frequently.  Evaluate your gun fit (Shouldering location & fit) ";
+    						else if (player.aimHits[1]/player.aimShots[0] < player.aimHits[2]/player.aimShots)
+    							player.comments[n++] = "Your aim point is Left too frequently.  Evaluate your gun fit (Shouldering location & fit) ";
+
+    						if (player.aimHits[3]/player.aimShots < player.aimHits[4]/player.aimShots)
+    							player.comments[n++] = "Your aim point is behind the target frequently.  Lead the clay more.";
+    						else if (player.aimHits[1]/player.aimShots[0] < player.aimHits[2]/player.aimShots)
+    							player.comments[n++] = "Your aim point is out in front of the clay too much.  Lead the clay less.";
+
+    						if (player.aimHits[5]/player.aimShots < player.aimHits[6]/player.aimShots)
+    							player.comments[n++] = "Your aim point is typically below the target.  Hold higher on the clay.";
+    						else if (player.aimHits[1]/player.aimShots < player.aimHits[2]/player.aimShots)
+    							player.comments[n++] = "Your aim point is typically too far above the target.  Hold lower on the clay.";
+        				}
+        			}
+        		}
+        	}
+        }
     }
 })();
