@@ -120,8 +120,13 @@
 	</table>
 	
 	<div ng-if="ReportCtrl.commentsDone">
-		<h2>Feedback:</h2>
-		<ol><li ng-repeat="comment in ps.comments track by $index">{{comment}}</li></ol>
+		<h2>The Trifecta 3 (Top 3 Insights):</h2>
+		<ol><li ng-repeat="comment in ps.comments_top3 track by $index"><b>{{comment.lhs}}</b> {{comment.rhs}}</li></ol>
+		<select><option ng-repeat="opt in ps.opts_top3" value="$index">{{opt}}</option></select>
+
+		<h2>Additional Comments:</h2>
+		<ol><li ng-repeat="comment in ps.comments_addl track by $index">{{comment}}</li></ol>
+		<select><option ng-repeat="opt in ps.opts_addl" value="$index">{{opt}}</option></select>
 	</div>
 	<textarea rows="2" cols="120" class="coach-comment"></textarea>
 	

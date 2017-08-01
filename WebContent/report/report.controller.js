@@ -35,7 +35,7 @@
         	$scope.isLoading = (ctrl.threads == 0)? false : true;
         	if (ctrl.threads == 0 && !ctrl.commentsDone)
         	{
-        		updateComments2();
+        		updateComments3();
         		ctrl.commentsDone = true;
         	}
         	$timeout(checkLoading, 500);
@@ -537,5 +537,34 @@
         		}
         	}
         }
+        
+        function updateComments3()
+        {
+        	for (var i=0; i<ctrl.teamData.length; i++) {
+        		if (ctrl.teamData[i].ps) {
+        			for (var j=0; j<ctrl.teamData[i].ps.length; j++) {
+        				var player = ctrl.teamData[i].ps[j];
+        				player.comments = []; // No automatic comments here
+        				
+        				var shotRate = Math.round(100 * player.totalHits / player.totalShots);
+        				var cl = get_comments_list();
+        				var n = 0;
+        				player.opts_top3 = [];
+        				for (var k=0; k<cl.length; k++)
+        					if (cl[k].text.split('-').length == 2)
+        						player.opts_top3[n++] = cl[k].text.replace("%EQN1%", shotRate.toString());
+
+        				n = 0;
+        				player.opts_addl = [];
+        				for (var k=0; k<cl.length; k++)
+        					player.opts_addl[n++] = cl[k].text.replace("%EQN1%", shotRate.toString());
+        				
+        				player.comments_top3 = [{lhs: "Read this", rhs: "Comment A"}, {lhs: "Read now", rhs: "Comment B"}, {lhs: "Know this", rhs: "You will win"}];
+        				player.comments_addl = ["Comment X", "Comment Y", "Comment Z"];
+        			}
+        		}
+        	}
+        }
+
     }
 })();
