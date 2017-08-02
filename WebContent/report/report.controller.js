@@ -14,7 +14,11 @@
         ctrl.endDate = $routeParams.endDate || "";
         ctrl.teamId = $routeParams.teamId || -1;
         ctrl.gotoCoach = gotoCoach;
+        ctrl.top3change = top3change;
+        ctrl.addlchange = addlchange;
         ctrl.commentsDone;
+        ctrl.top3selected = 0;
+        ctrl.addlselected = 0;
         
         initController();
         $timeout(checkLoading, 1500);
@@ -550,19 +554,48 @@
         				var cl = get_comments_list();
         				var n = 0;
         				player.opts_top3 = [];
+        				player.opts_top3[n] = {name: "Select / Clear ...", code: n, p: player};
+        				n++;
         				for (var k=0; k<cl.length; k++)
-        					if (cl[k].text.indexOf('-') !== -1)
-        						player.opts_top3[n++] = cl[k].text.replace("%EQN1%", shotRate.toString());
+        					if (cl[k].text.indexOf('-') !== -1) {
+        						player.opts_top3[n] = {name: cl[k].text.replace("%EQN1%", shotRate.toString()), code: n, p: player};
+        						n++;
+        					}
 
         				n = 0;
         				player.opts_addl = [];
-        				for (var k=0; k<cl.length; k++)
-        					player.opts_addl[n++] = cl[k].text.replace("%EQN1%", shotRate.toString());
+        				player.opts_addl[n] = {name: "Select / Clear ...", code: n, p: player};
+        				n++;
+        				for (var k=0; k<cl.length; k++) {
+        					player.opts_addl[n] = {name: cl[k].text.replace("%EQN1%", shotRate.toString()), code: n, p: player};
+        					n++
+        				}
         				
-        				player.comments_top3 = [{lhs: "Read this", rhs: "Comment A"}, {lhs: "Read now", rhs: "Comment B"}, {lhs: "Know this", rhs: "You will win"}];
-        				player.comments_addl = ["Comment X", "Comment Y", "Comment Z"];
+        				player.comments_top3 = [];
+        				player.comments_addl = [];
         			}
         		}
+        	}
+        }
+        
+        function top3change()
+        {
+        	if (this.top3selected.code === 0)
+        		this.top3selected.p.comments_top3 = [];
+        	else {
+        		var n = this.top3selected.p.comments_top3.length;
+        		var s = this.top3selected.name.split('-');
+        		this.top3selected.p.comments_top3[n++] = {lhs: s[0], rhs: s[1]};
+        	}
+        }
+
+        function addlchange()
+        {
+        	if (this.addlselected.code === 0)
+        		this.addlselected.p.comments_addl = [];
+        	else {
+        		var n = this.addlselected.p.comments_addl.length;
+        		this.addlselected.p.comments_addl[n++] = this.addlselected.name;
         	}
         }
 
