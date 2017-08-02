@@ -551,7 +551,7 @@
         				var n = 0;
         				player.opts_top3 = [];
         				for (var k=0; k<cl.length; k++)
-        					if (cl[k].text.split('-').length == 2)
+        					if (cl[k].text.indexOf('-') !== -1)
         						player.opts_top3[n++] = cl[k].text.replace("%EQN1%", shotRate.toString());
 
         				n = 0;
