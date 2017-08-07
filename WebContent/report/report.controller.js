@@ -289,7 +289,7 @@
         
         function plotAnalysisChart(id, ps, viewType) {
             var plotInfo = {};
-            plotInfo.WIDTH = 800;
+            plotInfo.WIDTH = 400;
             plotInfo.HEIGHT = 505;
             plotInfo.M_TOP = 50;
             plotInfo.M_BOTTOM = 50;
@@ -298,6 +298,7 @@
             plotInfo.id = id;
             plotInfo.legend = false;
             plotInfo.showShotNum = true;
+            plotInfo.border = false;
             plotInfo.axis = true;
             plotInfo.x = ps.eventDet.aimx;
             plotInfo.y = ps.eventDet.aimy;

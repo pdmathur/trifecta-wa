@@ -438,6 +438,29 @@ video::-webkit-media-controls-start-playback-button {
 }
 
 @media print {
+    body{ background-color:#FFFFFF; background-image:none; color:#000000 }
     h2.fresh-page {page-break-before: always;}
     textarea.coach-comment {border:none;}
+    #reportControls{display:none;}
+    #top3Ctrl{display:none;}
+    #addCommentsCtrl{display:none;}
+    /*#imgHeader{
+        display: block;
+        top:0;
+        position: fixed;
+        margin: 0 auto;
+    }*/
+    #footer1, #footer2 {
+         display: block; 
+         background-color: red;
+         width: 100%;
+         position: fixed; 
+         bottom: 0;
+         margin: 0 auto;
+         text-align:center;
+         font-size: 12pt;
+         font-weight: normal;
+         
+    } 
+    /*#contentarea{ width:100%;}*/
 }

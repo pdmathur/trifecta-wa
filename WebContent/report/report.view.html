@@ -1,177 +1,243 @@
 
 <div id="wrapper">
+    <div id="reportControls">
+        </p><b>Threads: </b>{{ReportCtrl.threads}}</p>
+        <button type="button" class="btn btn-default" style="margin-left: 15px;padding: 2px 4px 2px 4px;"><i  ng-click="ReportCtrl.gotoCoach()" class="glyphicon glyphicon-arrow-left"></i></button>
+    </div>
+    <div ng-repeat="td in ReportCtrl.teamData">
 
-</p><b>Threads: </b>{{ReportCtrl.threads}}</p>
-<button type="button" class="btn btn-default" style="margin-left: 15px;padding: 2px 4px 2px 4px;"><i  ng-click="ReportCtrl.gotoCoach()" class="glyphicon glyphicon-arrow-left"></i></button>
+        <div class="pageSummtableDiv fresh-page" ng-repeat="ps in td.ps">
+            <table style="border:0;width:100%;min-height: 100%">
+                <thead></thead>
+                <tbody><tr><td style="width:100%;">
+                            <table class="table table-condensed table-responsive" style="border: none;">
+                                <tr>
+                                    <td>
+                                        <img src="img/report_logo.png" width="400" height="120" />
+                                        <div style='padding: 20px;font-size:18pt;'>
+                                            <p>
+                                                <b>Trifecta Player Report</b><br>
+                                                Team: {{td.name}}<br>
+                                                Coach: {{td.coach}}<br>
+                                                Player: {{ps.recs[0].nname}}</p>
+                                        </div>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <div style='padding-top: 80px;'>
+                                            <!-- Money shot -->
+                                            <font style="font-size:18pt;"><b> {{ps.recs[0].nname}}'s Money Shot</b></font><br>
+                                            <div style="min-height: 405px;">
+                                                <div class="panel panel-default" style="border:none;">
+                                                    <div class="panel-body">
+                                                        <svg style="display: block; margin: auto;" width="400"
+                                                             height="405" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-money"></svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
 
-<div ng-repeat="td in ReportCtrl.teamData">
-   <div class="pageSummtableDiv" ng-repeat="ps in td.ps">
-   
-    <h2 class="fresh-page"><font style="text-decoration:underline;">Trifecta Player Report</font></h2>
-	<p><font style="font-size:18pt;"><b>Team:</b> {{td.name}}</font><br>
-	   <font style="font-size:18pt;"><b>Coach:</b> {{td.coach}}</font><br>
-	   <font style="font-size:18pt;"><b>Player:</b> {{ps.recs[0].nname}}</font></p>
+                            <div ng-if="ReportCtrl.commentsDone">
+                                <h2><b>The Trifecta 3 (Top 3 Insights):</b></h2>
+                                <ol>
+                                    <li style="font-size: 20pt;" ng-repeat="comment in ps.comments_top3 track by $index"><b>{{comment.lhs}} - </b><font style="font-size:16pt;">{{comment.rhs}}</font></li>
+                                </ol>
+                                <select id="top3Ctrl" ng-options="opt.name for opt in ps.opts_top3" ng-model="ReportCtrl.top3selected" ng-change="ReportCtrl.top3change()"></select>
+                                <br>
+                                <label style="font-size:18pt;font-weight: normal;">Additional Comments:</label>
+                                <ol><li style="font-size: 16pt;" ng-repeat="comment in ps.comments_addl track by $index">{{comment}}</li></ol>
+                                <select id="addCommentsCtrl" ng-options="opt.name for opt in ps.opts_addl" ng-model="ReportCtrl.addlselected" ng-change="ReportCtrl.addlchange()"></select>
+                            </div>
+                            <textarea rows="2" cols="120" class="coach-comment"></textarea>
+                        </td></tr></tbody>
+                <tfoot>
+                    <tr><td style="width: 100%;">
+                            <!-- footer -->
+                            <table id="footer2" style="width: 100%;"> 
+                                <tr> 
+                                    <td width="100%" style="width: 100%;text-align: center;font-size: 12pt;font-weight: normal;"> 
+                                        Be sure to check out your round ... <br/>
+                                        Login at <b>www.TrifectaShot.com</b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
 
-	<h2>Round Statistics:</h2>
-	
-	<table class="table table-bordered table-condensed table-responsive" id="pageSum">
-            <thead style="background-color: white;">
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td colspan="2">Avg</td>
+            <h2 class="fresh-page">  </h2>
+            <div >
+            <img id="imgHeader" src="img/report_logo.png" width="400" height="120" />
+            <h2>Round Statistics:</h2>
+            <table style="border:0;width:100%;">
+                <thead></thead>
+                <tbody><tr><td style="width:100%;">
+                            <table class="table table-bordered table-condensed table-responsive" id="pageSum">
+                                <thead style="background-color: white;">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td colspan="2">Avg</td>
 
-				<td colspan="5" class="pageSumHeader">Station</td>
-				<td class="PageSumDivider"></td>
-
-
-				<td colspan="3" class="pageSumHeader">Flight Direction</td>
-				<td class="PageSumDivider"></td>
-
-
-				<td></td>
-				<td colspan="6" class="pageSumHeader">Aim Point</td>
-
-			</tr>
-			<tr>
-				<td></td>
-				<td colspan="2"># Rounds</td>
-
-				<td>Hits</td>
-				<td>Shots</td>
-				<td ng-repeat="st in [1, 2, 3, 4, 5] track by $index"
-					class="pageSumHeader">{{st}}</td>
-				<td class="PageSumDivider"></td>
-
-				<td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index"
-					class="pageSumHeader">{{an}}</td>
-				<td class="PageSumDivider"></td>
-
-
-				<td>On%</td>
-				<td colspan="6" class="pageSumHeader">% of Round(on Average)</td>
-
-			</tr>
-			<tr>
-				<td></td>
-				<td colspan="2">{{ps.recs.length}}</td>
-				<td>{{ps.totalHits/ps.recs.length | number:1}}</td>
-				<td>{{ps.totalShots/ps.recs.length | number:1}}</td>
-				<td ng-repeat="st in [1, 2, 3, 4, 5] track by $index" class="pageSumHeader">
-				   {{ps.stHits[st]/ps.recs.length | number:1}}</td>
-				<td class="PageSumDivider"></td>
-
-
-				<td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index" class="pageSumHeader">
-					{{ps.angleHits[$index]/ps.recs.length | number:1}}
-					/{{ps.angleShots[$index]/ps.recs.length | number:1}}</td>
-				<td class="PageSumDivider"></td>
-
-
-				<td ng-repeat='an in ["aimon","aimleft","aimright","aimahead","aimbehind","aimover","aimunder"] track by $index'
-					class="pageSumHeader">
-					{{ps.aimHits[$index]/ps.aimShots*100 | number:0}}%</td>
-
-			</tr>
-			<tr>
-				<td>Rnd</td>
-				<td style="width: 6em;">Date</td>
-				<td>Description</td>
-				<td>Score</td>
-				<td>Shots</td>
-				<td colspan="5" class="pageSumHeader">Hits</td>
-				<td class="PageSumDivider"></td>
-
-
-				<td colspan='3' class="pageSumHeader">Hits/Total</td>
-				<td class="PageSumDivider"></td>
-
-
-				<td>On</td>
-				<td class="pageSumHeader">Lft</td>
-				<td class="pageSumHeader">Rt</td>
-				<td class="pageSumHeader">Ahd</td>
-				<td class="pageSumHeader">Bnd</td>
-				<td class="pageSumHeader">Ovr</td>
-				<td class="pageSumHeader">Und</td>
-
-			</tr>
-                </thead>
-                <tbody>
-			<tr ng-repeat="item in ps.recs track by $index">
-				<td>{{ps.recs.length - $index}}</td>
-				<td>{{item.date | date:'MMM - dd'}}</td>
-				<td style='text-align: left;'>{{item.title}}</td>
-				<td>{{item.totalHits}}</td>
-				<td>{{item.totalShots}}</td>
-				<td ng-repeat="st in [1, 2, 3, 4, 5] track by $index">{{item.stHits[st]}}</td>
-				<td class="PageSumDivider"></td>
+                                        <td colspan="5" class="pageSumHeader">Station</td>
+                                        <td class="PageSumDivider"></td>
 
 
-				<td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index">{{item.angleHits[$index]}}</td>
-				<td class="PageSumDivider"></td>
+                                        <td colspan="3" class="pageSumHeader">Flight Direction</td>
+                                        <td class="PageSumDivider"></td>
 
 
-				<td
-					ng-repeat='an in ["aimon","aimleft","aimright","aimahead","aimbehind","aimover","aimunder"] track by $index'>{{item.aimHits[$index]}}</td>
-			</tr>
-		</tbody>
-	</table>
-	
-	<div ng-if="ReportCtrl.commentsDone">
-		<h2>The Trifecta 3 (Top 3 Insights):</h2>
-		<ol><li ng-repeat="comment in ps.comments_top3 track by $index"><b>{{comment.lhs}}</b> - {{comment.rhs}}</li></ol>
-		<select ng-options="opt.name for opt in ps.opts_top3" ng-model="ReportCtrl.top3selected" ng-change="ReportCtrl.top3change()"></select>
+                                        <td></td>
+                                        <td colspan="6" class="pageSumHeader">Aim Point</td>
 
-		<h2>Additional Comments:</h2>
-		<ol><li ng-repeat="comment in ps.comments_addl track by $index">{{comment}}</li></ol>
-		<select ng-options="opt.name for opt in ps.opts_addl" ng-model="ReportCtrl.addlselected" ng-change="ReportCtrl.addlchange()"></select>
-	</div>
-	<textarea rows="2" cols="120" class="coach-comment"></textarea>
-	
-	<h2 class="fresh-page">Swing Path Analysis:</h2>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2"># Rounds</td>
 
-	<div style="min-height: 555px;">
-		<div class="panel panel-default"">
-			<div class="panel-body">
-					<svg style="display: block; margin: auto;" width="700"
-						height="505" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-swg"></svg>
-			</div>
-		</div>
-	</div>
+                                        <td>Hits</td>
+                                        <td>Shots</td>
+                                        <td ng-repeat="st in [1, 2, 3, 4, 5] track by $index"
+                                            class="pageSumHeader">{{st}}</td>
+                                        <td class="PageSumDivider"></td>
 
-	<h2 class="fresh-page">Swing Velocity Analysis:</h2>
+                                        <td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index"
+                                            class="pageSumHeader">{{an}}</td>
+                                        <td class="PageSumDivider"></td>
 
-	<div style="min-height: 555px;">
-		<div class="panel panel-default">
-			<div class="panel-body">
-					<svg style="display: block; margin: auto;" width="700"
-						height="505" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-vel"></svg>
-			</div>
-		</div>
-	</div>
 
-	<h2 class="fresh-page">Money Shot Analysis:</h2>
+                                        <td>On%</td>
+                                        <td colspan="6" class="pageSumHeader">% of Round(on Average)</td>
 
-	<div style="min-height: 555px;">
-		<div class="panel panel-default"">
-			<div class="panel-body">
-					<svg style="display: block; margin: auto;" width="700"
-						height="505" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-money"></svg>
-			</div>
-		</div>
-	</div>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">{{ps.recs.length}}</td>
+                                        <td>{{ps.totalHits / ps.recs.length| number:1}}</td>
+                                        <td>{{ps.totalShots / ps.recs.length| number:1}}</td>
+                                        <td ng-repeat="st in [1, 2, 3, 4, 5] track by $index" class="pageSumHeader">
+                                            {{ps.stHits[st] / ps.recs.length| number:1}}</td>
+                                        <td class="PageSumDivider"></td>
 
-	</div>
+
+                                        <td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index" class="pageSumHeader">
+                                            {{ps.angleHits[$index] / ps.recs.length| number:1}}
+                                            /{{ps.angleShots[$index] / ps.recs.length| number:1}}</td>
+                                        <td class="PageSumDivider"></td>
+
+
+                                        <td ng-repeat='an in ["aimon", "aimleft", "aimright", "aimahead", "aimbehind", "aimover", "aimunder"] track by $index'
+                                            class="pageSumHeader">
+                                            {{ps.aimHits[$index] / ps.aimShots * 100| number:0}}%</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Rnd</td>
+                                        <td style="width: 6em;">Date</td>
+                                        <td>Description</td>
+                                        <td>Score</td>
+                                        <td>Shots</td>
+                                        <td colspan="5" class="pageSumHeader">Hits</td>
+                                        <td class="PageSumDivider"></td>
+
+
+                                        <td colspan='3' class="pageSumHeader">Hits/Total</td>
+                                        <td class="PageSumDivider"></td>
+
+
+                                        <td>On</td>
+                                        <td class="pageSumHeader">Lft</td>
+                                        <td class="pageSumHeader">Rt</td>
+                                        <td class="pageSumHeader">Ahd</td>
+                                        <td class="pageSumHeader">Bnd</td>
+                                        <td class="pageSumHeader">Ovr</td>
+                                        <td class="pageSumHeader">Und</td>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in ps.recs track by $index">
+                                        <td>{{ps.recs.length - $index}}</td>
+                                        <td>{{item.date| date:'MMM - dd'}}</td>
+                                        <td style='text-align: left;'>{{item.title}}</td>
+                                        <td>{{item.totalHits}}</td>
+                                        <td>{{item.totalShots}}</td>
+                                        <td ng-repeat="st in [1, 2, 3, 4, 5] track by $index">{{item.stHits[st]}}</td>
+                                        <td class="PageSumDivider"></td>
+
+
+                                        <td ng-repeat="an in ['L/R', 'C', 'R/L'] track by $index">{{item.angleHits[$index]}}</td>
+                                        <td class="PageSumDivider"></td>
+
+
+                                        <td
+                                            ng-repeat='an in ["aimon", "aimleft", "aimright", "aimahead", "aimbehind", "aimover", "aimunder"] track by $index'>{{item.aimHits[$index]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="table table-condensed table-responsive">
+                                <tr style='text-align: center; '>
+
+                                    <td style="border-top:none;">
+
+                                        <h2>Swing Velocity </h2>
+
+                                        <div style="min-height: 555px;">
+                                            <div class="panel panel-default" style="border:none;">
+                                                <div class="panel-body">
+                                                    <svg style="display: block; margin: auto;" width="400"
+                                                         height="505" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-vel"></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="border-top:none;">
+                                        <h2>Flight Path </h2>
+
+                                        <div style="min-height: 555px;">
+                                            <div class="panel panel-default" style="border:none;">
+                                                <div class="panel-body">
+                                                    <svg style="display: block; margin: auto;" width="400"
+                                                         height="505" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-swg"></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td></tr>
+                </tbody>
+                <tfoot>
+                    <tr><td style="width: 100%;text-align: center;">
+                            <!-- footer -->
+                            <table id="footer1" width="100%" style="width: 100%;"> 
+                                <tr> 
+                                    <td width="100%" style="width:100%;text-align: center;font-size: 12pt;font-weight: normal;"> 
+                                        Be sure to check out your round ... <br/>
+                                        Login at <b>www.TrifectaShot.com</b>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
 </div>
-<script>
-    
-    var offset = $('.navbar').height();
-    $("html:not(.legacy) table").stickyTableHeaders({fixedOffset: offset});
-  </script>
+        </div>
+    </div>
+    <script>
 
-<div id="feedLoading" ng-show="isLoading">
-    <img src="img/loading.gif" width="200" height="200">
-</div>
+                var offset = $('.navbar').height();
+                $("html:not(.legacy) table").stickyTableHeaders({fixedOffset: offset});
+    </script>
+
+    <div id="feedLoading" ng-show="isLoading">
+        <img src="img/loading.gif" width="200" height="200">
+    </div>
 </div>
