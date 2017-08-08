@@ -7,12 +7,12 @@
     <div ng-repeat="td in ReportCtrl.teamData">
 
         <div class="pageSummtableDiv fresh-page" ng-repeat="ps in td.ps">
-            <table style="border:0;width:100%;min-height: 100%">
+            <table style="width:100%;min-height: 100%">
                 <thead></thead>
                 <tbody><tr><td style="width:100%;">
                             <table class="table table-condensed table-responsive" style="border: none;">
                                 <tr>
-                                    <td>
+                                    <td style="border: none;">
                                         <img src="img/report_logo.png" width="400" height="120" />
                                         <div style='padding: 20px;font-size:18pt;'>
                                             <p>
@@ -22,12 +22,12 @@
                                                 Player: {{ps.recs[0].nname}}</p>
                                         </div>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;border:none;">
                                         <div style='padding-top: 80px;'>
                                             <!-- Money shot -->
                                             <font style="font-size:18pt;"><b> {{ps.recs[0].nname}}'s Money Shot</b></font><br>
                                             <div style="min-height: 405px;">
-                                                <div class="panel panel-default" style="border:none;">
+                                                <div class="panel panel-default" style="border:none;box-shadow: none;-webkit-box-shadow: none;">
                                                     <div class="panel-body">
                                                         <svg style="display: block; margin: auto;" width="400"
                                                              height="405" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-money"></svg>
@@ -188,7 +188,7 @@
                                         <h2>Swing Velocity </h2>
 
                                         <div style="min-height: 555px;">
-                                            <div class="panel panel-default" style="border:none;">
+                                            <div class="panel panel-default" style="border:none;box-shadow: none;-webkit-box-shadow: none;">
                                                 <div class="panel-body">
                                                     <svg style="display: block; margin: auto;" width="400"
                                                          height="505" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-vel"></svg>
@@ -200,7 +200,7 @@
                                         <h2>Flight Path </h2>
 
                                         <div style="min-height: 555px;">
-                                            <div class="panel panel-default" style="border:none;">
+                                            <div class="panel panel-default" style="border:none;box-shadow: none;-webkit-box-shadow: none;">
                                                 <div class="panel-body">
                                                     <svg style="display: block; margin: auto;" width="400"
                                                          height="505" id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-swg"></svg>
