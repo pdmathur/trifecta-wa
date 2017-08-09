@@ -451,8 +451,8 @@ video::-webkit-media-controls-start-playback-button {
         margin: 0 auto;
     }*/
     #footer1, #footer2 {
-         display: block; 
-         background-color: red;
+         /*display: block;
+         background-color: red;*/ 
          width: 100%;
          position: fixed; 
          bottom: 0;
