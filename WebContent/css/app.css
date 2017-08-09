@@ -437,9 +437,11 @@ video::-webkit-media-controls-start-playback-button {
   border-bottom-width: 0;
 }
 
+#footer, #header {display:none;}
+
 @media print {
     body{ background-color:#FFFFFF; background-image:none; color:#000000 }
-    h2.fresh-page {page-break-before: always;}
+    .fresh-page {page-break-before: always;}
     textarea.coach-comment {border:none;}
     #reportControls{display:none;}
     #top3Ctrl{display:none;}
@@ -450,7 +452,7 @@ video::-webkit-media-controls-start-playback-button {
         position: fixed;
         margin: 0 auto;
     }*/
-    #footer1, #footer2 {
+    #footer {
          display: block; 
          background-color: red;
          width: 100%;
@@ -460,7 +462,17 @@ video::-webkit-media-controls-start-playback-button {
          text-align:center;
          font-size: 12pt;
          font-weight: normal;
-         
+    } 
+    #header {
+         display: block; 
+         background-color: red;
+         width: 100%;
+         position: fixed; 
+         top: 0;
+         margin: 0 auto;
+         text-align:left;
+         font-size: 12pt;
+         font-weight: normal;
     } 
     /*#contentarea{ width:100%;}*/
 }

@@ -289,12 +289,17 @@
         
         function plotAnalysisChart(id, ps, viewType) {
             var plotInfo = {};
-            plotInfo.WIDTH = 400;
-            plotInfo.HEIGHT = 505;
-            plotInfo.M_TOP = 50;
-            plotInfo.M_BOTTOM = 50;
-            plotInfo.M_LEFT = 50;
-            plotInfo.M_RIGHT = 50;
+            if (viewType == "MONEY") {
+            	plotInfo.WIDTH = 540;
+            	plotInfo.HEIGHT = 405;
+            } else {
+            	plotInfo.WIDTH = 360;
+            	plotInfo.HEIGHT = 270;
+            }
+            plotInfo.M_TOP = 0;
+            plotInfo.M_BOTTOM = 0;
+            plotInfo.M_LEFT = 0;
+            plotInfo.M_RIGHT = 0;
             plotInfo.id = id;
             plotInfo.legend = false;
             plotInfo.showShotNum = true;
@@ -311,7 +316,7 @@
                 } else if (viewType == "SWG") {
                 	drawSwingPathChart(ps.eventAssets[1], plotInfo);
                 } else if (viewType == "MONEY") {
-                    plotInfo.WIDTH = plotInfo.HEIGHT; // make square
+                    //plotInfo.WIDTH = plotInfo.HEIGHT; // make square
                     drawMoneyShotChart(ps.eventAssets[1], plotInfo);
                 }
             });

@@ -611,8 +611,18 @@ function drawChart3(data, plotInfo) {
     var minY = d3.min(data, function (d) {return d.y;});
     var maxY = d3.max(data, function (d) {return d.y;});
 
+
     // Give at least one radius worth of margin around each side
-    var marginFactor = 1.4; // > 1
+    var marginFactor = 1.4; // > 1 
+    if (plotInfo.M_RIGHT == 0 && plotInfo.M_RIGHT == 0 && plotInfo.M_RIGHT == 0 && plotInfo.M_RIGHT == 0)
+    {
+    	marginFactor = 1.0; // shrink to bare bones
+        minX = minX - 4; // add offset padding instead
+        maxX = maxX + 4;
+        minY = minY - 2;
+        maxY = maxY + 2;
+    }
+    
     plotInfo.radius = parseInt(plotInfo.radius);
     if (+plotInfo.x - marginFactor*plotInfo.radius < minX) {
         minX = plotInfo.x - marginFactor*plotInfo.radius;
