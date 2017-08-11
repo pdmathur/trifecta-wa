@@ -45,7 +45,12 @@
 			</ol>
 			<select id="top3Ctrl" ng-options="opt.name for opt in ps.opts_top3"
 				ng-model="ReportCtrl.top3selected"
-				ng-change="ReportCtrl.top3change()"></select> <br> <label
+				ng-change="ReportCtrl.top3change()"></select>
+                    <br/>
+                    <textarea rows="2" cols="120" class="coach-comment" style="font-size: 16pt;" placeholder="Add comments.."
+                          ng-model="ps.addlTop3" code="13" dl-key-code="ReportCtrl.addTop3Comment(ps);"></textarea>
+		
+                    <br/> <label
 				style="font-size: 18pt; font-weight: normal;">Additional
 				Comments:</label>
 			<ol>
@@ -56,14 +61,18 @@
 				ng-options="opt.name for opt in ps.opts_addl"
 				ng-model="ReportCtrl.addlselected"
 				ng-change="ReportCtrl.addlchange()"></select>
-		</div>
-		<textarea rows="2" cols="120" class="coach-comment" style="font-size: 16pt;"></textarea>
+		
+            <textarea rows="2" cols="120" class="coach-comment" style="font-size: 16pt;"  placeholder="Add comments.."
+                          ng-model="ps.addlComm" code="13" dl-key-code="ReportCtrl.addAddlComment(ps);"></textarea>
 		<br>
-
-		<h2 class="fresh-page" style="margin-top:180px;">Round Statistics:</h2>
-		<table class="table table-bordered table-condensed table-responsive"
+</div>
+		
+		<table class="table table-bordered table-condensed table-responsive fresh-page" style="margin-top:140px;"
 			id="pageSum">
 			<thead style="background-color: white;">
+                            <tr>
+                                <td colspan="32" style="text-align: right;font-size: 18pt;">Round Statistics</td>
+                            </tr>
 				<tr>
 					<td></td>
 					<td></td>
@@ -150,7 +159,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in ps.recs track by $index">
+				<tr ng-repeat="item in ps.recs track by $index" ng-class="($index == 0)?'pageSumSelectedEvent':''">
 					<td>{{ps.recs.length - $index}}</td>
 					<td>{{item.date| date:'MMM - dd'}}</td>
 					<td style='text-align: left;'>{{item.title}}</td>
@@ -169,18 +178,20 @@
 				</tr>
 			</tbody>
 		</table>
-		<table class="table table-condensed table-responsive">
-			<tr style='text-align: center;'>
+		<table class="table table-condensed table-responsive" style='text-align: center;'>
+			<tr>
 
 				<td style="border-top: none;">
 
 					<h2>Swing Velocity</h2> <svg style="display: block; margin: auto;"
-						width="360" height="270"
+						width="720" height="270"
 						id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-vel"></svg>
 				</td>
-				<td style="border-top: none;">
-					<h2>Flight Path</h2> <svg style="display: block; margin: auto;"
-						width="360" height="270"
+                        </tr>
+                        <tr>
+				<td style="border-top: none;padding-top: 10px;">
+					<h2>Traphouse View</h2> <svg style="display: block; margin: auto;"
+						width="720" height="270"
 						id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-swg"></svg>
 
 				</td>

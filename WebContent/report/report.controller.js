@@ -3,8 +3,25 @@
 
     angular
             .module('app')
+            .directive('dlKeyCode', dlKeyCode)
             .controller('ReportController', ReportController);
+ function dlKeyCode() {
+    return {
+      restrict: 'A',
+      link: function($scope, $element, $attrs) {
+        $element.bind("keypress", function(event) {
+          var keyCode = event.which || event.keyCode;
 
+          if (keyCode == $attrs.code) {
+            $scope.$apply(function() {
+              $scope.$eval($attrs.dlKeyCode, {$event: event});
+            });
+
+          }
+        });
+      }
+    };
+  }
     ReportController.$inject = ['$scope', '$location', '$routeParams', '$cookieStore','EventService', '$rootScope', '$sce', '$timeout', '$filter', 'filterFilter', 'TeamMgmtService'];
     function ReportController($scope, $location, $routeParams, $cookieStore, EventService, $rootScope, $sce, $timeout, $filter, filterFilter, TeamMgmtService) {
         var ctrl = this;
@@ -16,6 +33,8 @@
         ctrl.gotoCoach = gotoCoach;
         ctrl.top3change = top3change;
         ctrl.addlchange = addlchange;
+        ctrl.addAddlComment = addAddlComment;
+        ctrl.addTop3Comment = addTop3Comment;
         ctrl.commentsDone;
         ctrl.top3selected = 0;
         ctrl.addlselected = 0;
@@ -293,7 +312,7 @@
             	plotInfo.WIDTH = 540;
             	plotInfo.HEIGHT = 405;
             } else {
-            	plotInfo.WIDTH = 360;
+            	plotInfo.WIDTH = 720;
             	plotInfo.HEIGHT = 270;
             }
             plotInfo.M_TOP = 0;
@@ -604,6 +623,19 @@
         		this.addlselected.p.comments_addl[n++] = this.addlselected.name;
         	}
         }
-
+        
+        function addAddlComment(p) {
+            if (p.addlComm !== "") {
+                p.comments_addl.push(p.addlComm);
+                p.addlComm = "";
+            }
+        }
+        function addTop3Comment(p) {
+            if (p.addlTop3 !== "") {
+                var s = p.addlTop3.split('-');
+                p.comments_top3.push({lhs: s[0], rhs: s[1]});
+                p.addlTop3 = "";
+            }
+        }
     }
 })();
