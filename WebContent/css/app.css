@@ -442,7 +442,8 @@ video::-webkit-media-controls-start-playback-button {
 @media print {
     body{ background-color:#FFFFFF; background-image:none; color:#000000 }
     .fresh-page {page-break-before: always;}
-    textarea.coach-comment {border:none;}
+    
+    textarea.coach-comment {display:none;}
     #reportControls{display:none;}
     #top3Ctrl{display:none;}
     #addCommentsCtrl{display:none;}
@@ -454,7 +455,6 @@ video::-webkit-media-controls-start-playback-button {
     }*/
     #footer {
          display: block; 
-         background-color: red;
          width: 100%;
          position: fixed; 
          bottom: 0;
@@ -465,7 +465,6 @@ video::-webkit-media-controls-start-playback-button {
     } 
     #header {
          display: block; 
-         background-color: red;
          width: 100%;
          position: fixed; 
          top: 0;
@@ -474,5 +473,13 @@ video::-webkit-media-controls-start-playback-button {
          font-size: 12pt;
          font-weight: normal;
     } 
+    .table td,
+    .table th {
+        background-color: transparent !important;
+    }
+    .pageSumSelectedEvent {
+        background-color: #66ccff !important;
+    }
+    
     /*#contentarea{ width:100%;}*/
 }

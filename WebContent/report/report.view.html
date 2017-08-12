@@ -66,13 +66,11 @@
                           ng-model="ps.addlComm" code="13" dl-key-code="ReportCtrl.addAddlComment(ps);"></textarea>
 		<br>
 </div>
-		
-		<table class="table table-bordered table-condensed table-responsive fresh-page" style="margin-top:140px;"
+            <h2 class="fresh-page" style="margin-top:140px;">Round Statistics : </h2>
+		<table class="table table-bordered table-condensed table-responsive" 
 			id="pageSum">
 			<thead style="background-color: white;">
-                            <tr>
-                                <td colspan="32" style="text-align: right;font-size: 18pt;">Round Statistics</td>
-                            </tr>
+                            
 				<tr>
 					<td></td>
 					<td></td>
@@ -178,20 +176,28 @@
 				</tr>
 			</tbody>
 		</table>
-		<table class="table table-condensed table-responsive" style='text-align: center;'>
+		<table class="table table-condensed table-responsive">
 			<tr>
 
-				<td style="border-top: none;">
+				<td style="border-top: none;padding-left: 0px;">
 
-					<h2>Swing Velocity</h2> <svg style="display: block; margin: auto;"
-						width="720" height="270"
+					<h2>Swing Velocity</h2> 
+                                </td>
+                        </tr>
+                        <tr><td style='text-align: center;border-top: none;'>
+                                        <svg style="display: block; margin: auto;"
+						width="720" height="380"
 						id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-vel"></svg>
 				</td>
                         </tr>
                         <tr>
-				<td style="border-top: none;padding-top: 10px;">
-					<h2>Traphouse View</h2> <svg style="display: block; margin: auto;"
-						width="720" height="270"
+				<td style="border-top: none;padding-top: 10px;padding-left: 0px;">
+					<h2>Traphouse View</h2> 
+                                </td>
+                        </tr>
+                        <tr><td style='text-align: center;border-top: none;'>
+                                <svg style="display: block; margin: auto;"
+						width="720" height="380"
 						id="vis-rpt-{{td.id}}-{{ps.recs[0].userId}}-swg"></svg>
 
 				</td>
