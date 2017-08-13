@@ -312,8 +312,8 @@
             	plotInfo.WIDTH = 540;
             	plotInfo.HEIGHT = 405;
             } else {
-            	plotInfo.WIDTH = 720;
-            	plotInfo.HEIGHT = 380;
+            	plotInfo.WIDTH = 400;
+            	plotInfo.HEIGHT = 150;
             }
             plotInfo.M_TOP = 0;
             plotInfo.M_BOTTOM = 0;
