@@ -438,7 +438,9 @@ video::-webkit-media-controls-start-playback-button {
 }
 
 #footer, #header {display:none;}
-
+.pageSumSelectedEvent1 {
+        background-color: #99ddff;
+    }
 @media print {
     body{ background-color:#FFFFFF; background-image:none; color:#000000 }
     .fresh-page {page-break-before: always;}
@@ -473,12 +475,11 @@ video::-webkit-media-controls-start-playback-button {
          font-size: 12pt;
          font-weight: normal;
     } 
-    .table td,
-    .table th {
+    .table td,.table th {
         background-color: transparent !important;
     }
-    .pageSumSelectedEvent {
-        background-color: #66ccff !important;
+    .pageSumSelectedEvent1 {
+        background-color: #99ddff !important;
     }
     
     /*#contentarea{ width:100%;}*/

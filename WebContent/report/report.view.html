@@ -157,7 +157,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in ps.recs track by $index" ng-class="(item.eventId == ps.maxEventId)?'pageSumSelectedEvent':''">
+				<tr ng-repeat="item in ps.recs track by $index" ng-class="(item.eventId == ps.maxEventId)?'pageSumSelectedEvent1':''">
 					<td>{{ps.recs.length - $index}}</td>
 					<td>{{item.date| date:'MMM - dd'}}</td>
 					<td style='text-align: left;'>{{item.title}}</td>
